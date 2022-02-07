@@ -12,8 +12,6 @@ const Container = Styled.div`
 `
 
 const Body = Styled.div`
-	padding: 16px;
-	padding-top: 76px;
 `
 
 interface IPageProps
