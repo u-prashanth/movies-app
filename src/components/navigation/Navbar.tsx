@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Styled from 'styled-components';
 
-const NavbarWrapper = Styled.nav`
+const NavbarWrapper = Styled.nav<{ fadeToBlack: boolean }>`
     width: 100%;
     height: 70px;
 
@@ -18,6 +18,30 @@ const NavbarWrapper = Styled.nav`
     background: -ms-linear-gradient(top, rgba(33,33,33,0.51) 0%, rgba(33,33,33,0) 100%);
     background: linear-gradient(to bottom, rgba(33,33,33,0.51) 0%, rgba(33,33,33,0) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212121', endColorstr='#212121', GradientType=0 );
+
+    ${
+        props => props.fadeToBlack ?
+
+        `
+            background: #212121;
+        `
+
+        :
+
+        `
+            background: rgba(33,33,33,0.51);
+            background: -moz-linear-gradient(top, rgba(33,33,33,0.51) 0%, rgba(33,33,33,0) 100%);
+            background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(33,33,33,0.51)), color-stop(100%, rgba(33,33,33,0)));
+            background: -webkit-linear-gradient(top, rgba(33,33,33,0.51) 0%, rgba(33,33,33,0) 100%);
+            background: -o-linear-gradient(top, rgba(33,33,33,0.51) 0%, rgba(33,33,33,0) 100%);
+            background: -ms-linear-gradient(top, rgba(33,33,33,0.51) 0%, rgba(33,33,33,0) 100%);
+            background: linear-gradient(to bottom, rgba(33,33,33,0.51) 0%, rgba(33,33,33,0) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212121', endColorstr='#212121', GradientType=0 );
+        `
+
+    }
+
+    transition: all .5s linear;
 `
 
 const NavbarContainer = Styled.div`
@@ -47,7 +71,7 @@ const NavRight = Styled.div`
 `
 
 const Logo = Styled.img`
-    width: 100px;
+    width: 92.5px;
     object-fit: contain;
 `
 
@@ -69,7 +93,7 @@ const LinksWrapper = Styled.div`
 `
 
 const LinkText = Styled.a`
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #fff;
     text-decoration: none;
@@ -77,8 +101,33 @@ const LinkText = Styled.a`
 `
 
 export const Navbar = () => {
+
+    const [ fadeToBlack, setFadeToBlack ] = React.useState(false);
+
+    React.useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+
+    }, [])
+
+    const handleScroll = (e: Event) => {
+        const window = e.currentTarget as Window;
+        
+        if(window.scrollY > 2)
+        {
+            setFadeToBlack(true);
+        }
+        else
+        {
+            setFadeToBlack(false);
+        }
+    }
+
     return (
-        <NavbarWrapper>
+        <NavbarWrapper fadeToBlack={fadeToBlack}>
             <NavbarContainer>
                 <NavLeft>
                     <Logo src='../../netflix-logo.svg'/>

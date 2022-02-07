@@ -24,6 +24,8 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle }>`
     {
         filter: brightness(0.8);
     }
+
+    cursor: pointer;
 `
 
 type ButtonStyle = "primary" | "secondary";
