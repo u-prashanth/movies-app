@@ -65,7 +65,7 @@ const MovieCardsWrapper = Styled.div`
 
 	@media only screen and (max-width: 576px)
 	{
-		grid-template-columns: repeat(2, minmax(100px, 200px));
+		grid-template-columns: repeat(3, minmax(100px, 200px));
 		padding: 10px;
 		margin-top: 8px;
 	}
