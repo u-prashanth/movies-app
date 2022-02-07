@@ -13,7 +13,7 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle }>`
     align-items: center;
     justify-content: center;
 
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
     white-space: pre;
 
@@ -26,6 +26,19 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle }>`
     }
 
     cursor: pointer;
+
+    @media only screen and (max-width: 576px)
+    {
+        font-size: 11px;
+        height: 24px;
+        padding: 0px 8px;
+        padding-right: 22px;
+
+        & > *:first-child
+        {
+            transform: scale(0.5);
+        }
+    }
 `
 
 type ButtonStyle = "primary" | "secondary";

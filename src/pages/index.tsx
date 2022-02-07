@@ -21,6 +21,11 @@ const MovieCardContainer = Styled.div`
 	height: 100%;
 
 	margin-top: -100px;
+
+	@media only screen and (max-width: 576px)
+	{
+		margin-top: -50px;
+	}
 `
 
 const MovieCardsWrapper = Styled.div`
@@ -60,9 +65,9 @@ const MovieCardsWrapper = Styled.div`
 
 	@media only screen and (max-width: 576px)
 	{
-		grid-template-columns: repeat(2, minmax(100px, 300px));
+		grid-template-columns: repeat(2, minmax(100px, 200px));
 		padding: 10px;
-		margin-top: -20px;
+		margin-top: 8px;
 	}
 `
 
@@ -153,26 +158,40 @@ const MovieInfoWrapper = Styled.div`
 
 const MovieTitle = Styled.span`
 	color: #fff;
-	font-size: 60px;
+	font-size: 4vw;
 	font-weight: 900;
 
 	position: relative;
 	z-index: 1;
 
-	@media only screen and (max-width: 576px)
+	@media only screen and (max-width: 800px)
 	{
-		font-size: 20px;
+		font-size: 14px;
 	}
 `
 
 const MovieDescription = Styled.p`
 	color: #fff;
-	font-size: 20px;
+	font-size: 1.4vw;
 	font-weight: 400;
 	margin-top: 16px;
 
 	position: relative;
 	z-index: 1;
+
+	overflow: hidden;
+    text-overflow: ellipsis;
+
+	display: -webkit-box;
+    line-clamp: 3; 
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+	@media only screen and (max-width: 800px)
+	{
+		font-size: 10px;
+		margin-top: 8px;
+	}
 `
 
 const ButtonContainer = Styled.div`
@@ -192,7 +211,7 @@ const ButtonContainer = Styled.div`
 `
 
 const MovieSectionTitle = Styled.h2`
-	font-size: 26px;
+	font-size: 1.4vw;
 	font-weight: 700;
 	color: #fff;
 
@@ -200,6 +219,12 @@ const MovieSectionTitle = Styled.h2`
 	z-index: 1;
 
 	padding-left: 44px;
+
+	@media only screen and (max-width: 800px)
+	{
+		font-size: 12px;
+		padding-left: 16px;
+	}
 `
 
 const Home: NextPage = () => {

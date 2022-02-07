@@ -42,6 +42,11 @@ const NavbarWrapper = Styled.nav<{ fadeToBlack: boolean }>`
     }
 
     transition: all .5s linear;
+
+    @media only screen and (max-width: 800px)
+	{
+		height: 48px;
+	}
 `
 
 const NavbarContainer = Styled.div`
@@ -73,6 +78,11 @@ const NavRight = Styled.div`
 const Logo = Styled.img`
     width: 92.5px;
     object-fit: contain;
+
+    @media only screen and (max-width: 800px)
+	{
+		width: 82.5px;
+	}
 `
 
 const LinksWrapper = Styled.div`
@@ -98,6 +108,11 @@ const LinkText = Styled.a`
     color: #fff;
     text-decoration: none;
     cursor: pointer;
+
+    @media only screen and (max-width: 800px)
+	{
+		font-size: 12px;
+	}
 `
 
 export const Navbar = () => {
