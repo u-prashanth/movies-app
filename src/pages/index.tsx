@@ -211,7 +211,11 @@ const Home: NextPage = () => {
 					<MovieInfoWrapper>
 						<MovieTitle>Your Eyes Tell</MovieTitle>
 						<MovieDescription>
-							A tragic accident lead to Kaori's blindness, but she clings to life and the smaller pleasures it can still afford her. She meets Rui and begins to talk to him. Rui was once a promising kickboxer, but something happened in his past. Kaori's smile brings out a change in Rui. However, the two are connected in more than one way. Rui attempts to do what is right.
+							{
+								`
+								A tragic accident lead to Kaori's blindness, but she clings to life and the smaller pleasures it can still afford her. She meets Rui and begins to talk to him. Rui was once a promising kickboxer, but something happened in his past. Kaori's smile brings out a change in Rui. However, the two are connected in more than one way. Rui attempts to do what is right.
+								`
+							}
 						</MovieDescription>
 
 						<ButtonContainer>
@@ -225,7 +229,7 @@ const Home: NextPage = () => {
 						</ButtonContainer>
 					</MovieInfoWrapper>
 				</BackdropContainer>
-				
+
 				<MovieCardContainer>
 					<MovieSectionTitle>Most Popular</MovieSectionTitle>
 					<MovieCardsWrapper>
