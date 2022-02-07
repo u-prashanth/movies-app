@@ -17,12 +17,17 @@ const Container = Styled.div`
 `
 
 const MovieCardContainer = Styled.div`
+	width: 100%:
+	height: 100%;
+
+	margin-top: -100px;
+`
+
+const MovieCardsWrapper = Styled.div`
 	width: 100%;
 	height: 100%;
 
-	padding: 44px;
-
-	margin-top: -100px;
+	padding: 16px 44px;
 
 	position: relative;
 	z-index: 1;
@@ -186,6 +191,16 @@ const ButtonContainer = Styled.div`
 	}
 `
 
+const MovieSectionTitle = Styled.h2`
+	font-size: 26px;
+	font-weight: 700;
+	color: #fff;
+
+	position: relative;
+	z-index: 1;
+
+	padding-left: 44px;
+`
 
 const Home: NextPage = () => {
 	return (
@@ -210,174 +225,69 @@ const Home: NextPage = () => {
 						</ButtonContainer>
 					</MovieInfoWrapper>
 				</BackdropContainer>
+				
 				<MovieCardContainer>
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/cVn8E3Fxbi8HzYYtaSfsblYC4gl.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+					<MovieSectionTitle>Most Popular</MovieSectionTitle>
+					<MovieCardsWrapper>
+						<MovieCard>
+							<MovieCardImage src='https://image.tmdb.org/t/p/w500/cVn8E3Fxbi8HzYYtaSfsblYC4gl.jpg'/>
+							{/* <MovieInfoWrapper>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+							</MovieInfoWrapper> */}
+						</MovieCard>
 
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+						<MovieCard>
+							<MovieCardImage src='https://image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg'/>
+							{/* <MovieInfoWrapper>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+							</MovieInfoWrapper> */}
+						</MovieCard>
 
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+						<MovieCard>
+							<MovieCardImage src='https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg'/>
+							{/* <MovieInfoWrapper>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+							</MovieInfoWrapper> */}
+						</MovieCard>
 
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/eEslKSwcqmiNS6va24Pbxf2UKmJ.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+						<MovieCard>
+							<MovieCardImage src='https://image.tmdb.org/t/p/w500/eEslKSwcqmiNS6va24Pbxf2UKmJ.jpg'/>
+							{/* <MovieInfoWrapper>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+							</MovieInfoWrapper> */}
+						</MovieCard>
 
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/x5o8cLZfEXMoZczTYWLrUo1P7UJ.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+						<MovieCard>
+							<MovieCardImage src='https://image.tmdb.org/t/p/w500/x5o8cLZfEXMoZczTYWLrUo1P7UJ.jpg'/>
+							{/* <MovieInfoWrapper>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+							</MovieInfoWrapper> */}
+						</MovieCard>
 
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+						<MovieCard>
+							<MovieCardImage src='https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg'/>
+							{/* <MovieInfoWrapper>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+							</MovieInfoWrapper> */}
+						</MovieCard>
 
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/v3KCBeX0CBlZnHZndimm7taYqwo.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+						<MovieCard>
+							<MovieCardImage src='https://image.tmdb.org/t/p/w500/v3KCBeX0CBlZnHZndimm7taYqwo.jpg'/>
+							{/* <MovieInfoWrapper>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+							</MovieInfoWrapper> */}
+						</MovieCard>
 
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+						<MovieCard>
+							<MovieCardImage src='https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg'/>
+							{/* <MovieInfoWrapper>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+							</MovieInfoWrapper> */}
+						</MovieCard>
+					</MovieCardsWrapper>
+					
 
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/cVn8E3Fxbi8HzYYtaSfsblYC4gl.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/eEslKSwcqmiNS6va24Pbxf2UKmJ.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/x5o8cLZfEXMoZczTYWLrUo1P7UJ.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/v3KCBeX0CBlZnHZndimm7taYqwo.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/cVn8E3Fxbi8HzYYtaSfsblYC4gl.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/eEslKSwcqmiNS6va24Pbxf2UKmJ.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/x5o8cLZfEXMoZczTYWLrUo1P7UJ.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/v3KCBeX0CBlZnHZndimm7taYqwo.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
-
-					<MovieCard>
-						<MovieCardImage src='https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg'/>
-						{/* <MovieInfoWrapper>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-						</MovieInfoWrapper> */}
-					</MovieCard>
+					
 				</MovieCardContainer>
 			</Container>
 		</Page>
