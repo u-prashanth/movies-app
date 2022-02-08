@@ -1,4 +1,5 @@
 import React from 'react';
+import { MapStateToProps, connect } from 'react-redux';
 import Styled from 'styled-components';
 
 import Link from 'next/link';
@@ -11,6 +12,8 @@ import { mdiMagnify  } from '@mdi/js';
 import { Button, Dropdown, Page, TextField } from '../components';
 import { IMovieData } from '../interface';
 import { GetPopularMoviesService } from '../services';
+
+import { setSearch } from '../redux/reducer'
 
 
 
@@ -155,6 +158,7 @@ const DropdownWrapper = Styled.div`
 interface IHomeProps extends GetServerSidePropsContext
 {
     result: string;
+	setSearch: ({}) => void
 }
 
 interface IState
@@ -198,12 +202,12 @@ class Home extends React.Component<IHomeProps, IState>
     }
 
 	setMovieData = (value: string) => {
-		console.log(value);
         this.setState({ moviesData: JSON.parse(value) as IMovieData[] });
     }
 
 	handleSearchText = (value: string) => {
 		this.setState({ search: value })
+		// this.props.setSearch(value);
 	}
 
 	handleCategorySelection = (value: string) => {
@@ -318,7 +322,7 @@ class Home extends React.Component<IHomeProps, IState>
 	}
 }
 
-export async function getStaticProps(ctx: GetStaticProps) {
+export async function getServerSideProps(ctx: GetStaticProps) {
     return {
         props: {
             result: JSON.stringify(await (await GetPopularMoviesService()).data.results)
@@ -326,4 +330,8 @@ export async function getStaticProps(ctx: GetStaticProps) {
     }
 }
 
-export default Home;
+const mapStateToProps = (state: any) => state
+const mapDispatchToProps = {
+	setSearch
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
