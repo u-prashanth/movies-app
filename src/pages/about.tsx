@@ -9,6 +9,7 @@ const Container = Styled.div`
 
     margin: auto;
 
+    padding: 16px;
     padding-top: 100px;
 `
 
