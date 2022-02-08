@@ -1,41 +1,51 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-const Wrapper = Styled.div`
-    max-width: 300px;
+const Container = Styled.div`
+    min-width: 100px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: clip;
+    border-radius: .2vw;
+
+    cursor: pointer;
+
+    position: relative;
+    z-index: 1;
+
+    &:hover
+    {
+        filter: brightness(1.1);
+    }
+`
+
+const Image = Styled.img`
     width: 100%;
+    // height: 200px;
 
-    max-height: 400px;
-    height: 100%;
-
-    border: 1px solid #dbdbdb;
-    border-radius: 3px;
-`
-
-const ImageContainer = Styled.div`
-    
-`
-
-const InfoContainer = Styled.div`
-
+    object-fit: contain;
 `
 
 interface IMovieCardProps
 {
-    title: string;
     imageUrl: string;
 }
 
-export const MovieCard: React.FunctionComponent<IMovieCardProps> = (props) => {
-    return (
-        <Wrapper>
-            <ImageContainer>
+export class MovieCard extends React.Component<IMovieCardProps, {}>
+{
+    constructor(props: IMovieCardProps)
+    {
+        super(props);
+    }
 
-            </ImageContainer>
-
-            <InfoContainer>
-                
-            </InfoContainer>
-        </Wrapper>
-    )
+    render()
+    {
+        return (
+            <Container>
+                <Image src={this.props.imageUrl}/>
+            </Container>
+        )
+    }
 }

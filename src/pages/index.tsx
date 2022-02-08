@@ -90,6 +90,13 @@ const MovieCard = Styled.div`
 
 	overflow: clip;
 	border-radius: .2vw;
+
+	cursor: pointer;
+
+    &:hover
+    {
+        filter: brightness(1.1);
+    }
 `
 
 const MovieCardImage = Styled.img`
@@ -296,9 +303,11 @@ class Home extends React.Component<IHomeProps, IState>
 						<MovieCardsWrapper>
 							{
 								this.state.moviesData.map((movie, index) => (
-									<MovieCard key={index}>
-										<MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
-									</MovieCard>
+									<Link href={`/movie?id=${movie.id}`} key={index}>
+										<MovieCard key={index}>
+											<MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
+										</MovieCard>
+									</Link>
 								))
 							}
 						</MovieCardsWrapper>

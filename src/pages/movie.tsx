@@ -74,9 +74,7 @@ class Movie extends React.Component<IMovieProps, IState>
     }
 
     setMovieData = (value: string) => {
-        this.setState({ movieData: JSON.parse(value) as IMovieData }, () => {
-            console.log(this.state.movieData)
-        })
+        this.setState({ movieData: JSON.parse(value) as IMovieData });
     }
 
     shouldComponentUpdate(prevProps: Readonly<IMovieProps> & Readonly<{ children?: React.ReactNode; }>)
@@ -87,7 +85,7 @@ class Movie extends React.Component<IMovieProps, IState>
     render()
     {
         return (
-            <Page title="Spiderman">
+            <Page title={this.state.movieData?.title || ''}>
                 <Container>
                     <VideoWrapper>
                         <div className='embed-container'>
