@@ -29,7 +29,13 @@ interface IMovieCardProps
 export const MovieCard: React.FunctionComponent<IMovieCardProps> = (props) => {
     return (
         <Wrapper>
+            <ImageContainer>
 
+            </ImageContainer>
+
+            <InfoContainer>
+                
+            </InfoContainer>
         </Wrapper>
     )
 }

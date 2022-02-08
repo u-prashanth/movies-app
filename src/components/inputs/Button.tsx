@@ -1,24 +1,22 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle }>`
+const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle, spanWidth?: boolean }>`
     color: ${props => props.buttonStyle === 'primary' ? '#000' : '#fff'};
     background-color: ${props => props.buttonStyle === 'primary' ? '#fff' : '#6d6d6eb3'};
     border-radius: 4px;
     border: none;
-
-    height: 3.4rem;
+    height: 42px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
     white-space: pre;
 
     padding: 0px 24px;
-    padding-right: 30px;
 
     &:hover
     {
@@ -34,10 +32,9 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle }>`
 
     @media only screen and (max-width: 576px)
     {
-        font-size: 11px;
-        height: 24px;
-        padding: 0px 8px;
-        padding-right: 22px;
+        font-size: 12px;
+        height: 40px;
+        padding: 0px 22px;
 
         & > *:first-child
         {
@@ -48,7 +45,7 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle }>`
 
 type ButtonStyle = "primary" | "secondary";
 
-interface IButtonProps
+interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 {
     buttonStyle?: ButtonStyle;
 }
@@ -65,7 +62,7 @@ export class Button extends React.Component<IButtonProps, {}>
         const { children, buttonStyle } = this.props;
 
         return (
-            <ButtonWrapper buttonStyle={buttonStyle || 'primary'}>
+            <ButtonWrapper buttonStyle={buttonStyle || 'primary'} {...this.props}>
                 {children}
             </ButtonWrapper>
         )

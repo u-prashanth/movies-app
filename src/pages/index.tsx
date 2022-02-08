@@ -1,10 +1,14 @@
-import type { NextPage } from 'next'
+import type { GetServerSidePropsContext, NextPage } from 'next'
 import React from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
 import { mdiPlay, mdiInformationOutline, mdiMagnify  } from '@mdi/js';
 import moment from 'moment';
 import { Button, Dropdown, Page, TextField } from '../components';
+import axios from 'axios';
+import { IMovieData } from '../interface';
 
 const Container = Styled.div`
 	width: 100%:
@@ -259,11 +263,34 @@ const DropdownWrapper = Styled.div`
 	}
 `
 
-const Home: NextPage = () => {
+const Home: NextPage = (props: any) => {
 	const [ category, setCategory ] = React.useState('');
+	const [ year, setYear ] = React.useState('');
+	const [ rating, setRating ] = React.useState('');
+	const [ search, setSearch ] = React.useState('');
+	const [ moviesData, setMoviesData ] = React.useState([] as unknown as IMovieData[]);
+
+	const router = useRouter();
+
+	React.useEffect(() => {
+		console.log('Query: ', JSON.parse(props.result))
+		setMoviesData(JSON.parse(props.result) as IMovieData[]);
+	}, [])
+
+	const handleSearchText = (value: string) => {
+		setSearch(value)
+	}
 
 	const handleCategorySelection = (value: string) => {
 		setCategory(value);
+	}
+
+	const handleYearSelection = (value: string) => {
+		setYear(value);
+	}
+
+	const handleRatingSelection = (value: string) => {
+		setRating(value);
 	}
 
 	return (
@@ -294,7 +321,21 @@ const Home: NextPage = () => {
 				</BackdropContainer> */}
 
 				<SearchBoxWrapper>
-					<TextField placeholder='Search Movies' withIcon={<Icon path={mdiMagnify} size={0.6} color='#888'/>} />
+					<div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+						<TextField 
+							placeholder='Search Movies' 
+							withIcon={<Icon path={mdiMagnify} size={0.6} color='#888'/>} 
+							value={search}
+							onChange={e => handleSearchText(e.target.value)}
+						/>
+						<div style={{ marginLeft: 8, display: 'flex' }}>
+							<Link 
+								href={`/search?movie=${search}&category=${category !== '' ? category : 'all'}&rating=${rating !== '' ? rating : 'all'}&year=${year !== '' ? year : 'all'}`}
+							>
+								<Button>Search</Button>
+							</Link>
+						</div>
+					</div>
 					<DropdownWrapper style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
 						<Dropdown
 							placeholder='Category'
@@ -316,38 +357,36 @@ const Home: NextPage = () => {
 
 						<Dropdown
 							placeholder='Rating'
-							value={category}
+							value={rating}
 							options={
 								[
-									'Action',
-									'Adventure',
-									'Crime',
-									'Comedy',
-									'Horror',
-									'Mystery',
-									'Romance',
-									'Thriller'
+									'9+',
+									'8+',
+									'7+',
+									'6+',
+									'5+',
+									'4+',
+									'3+',
+									'2+',
+									'1+'
 								]
 							}
-							onChange={e => handleCategorySelection(e.target.value)}
+							onChange={e => handleRatingSelection(e.target.value)}
 						/>
 
 						<Dropdown
 							placeholder='Year'
-							value={category}
+							value={year}
 							options={
 								[
-									'Action',
-									'Adventure',
-									'Crime',
-									'Comedy',
-									'Horror',
-									'Mystery',
-									'Romance',
-									'Thriller'
+									'2022',
+									'2021',
+									'2020',
+									'2019',
+									'2018',
 								]
 							}
-							onChange={e => handleCategorySelection(e.target.value)}
+							onChange={e => handleYearSelection(e.target.value)}
 						/>
 					</DropdownWrapper>
 				</SearchBoxWrapper>
@@ -355,61 +394,16 @@ const Home: NextPage = () => {
 				<MovieCardContainer>
 					<MovieSectionTitle>Most Popular</MovieSectionTitle>
 					<MovieCardsWrapper>
-						<MovieCard>
-							<MovieCardImage src='https://image.tmdb.org/t/p/w500/cVn8E3Fxbi8HzYYtaSfsblYC4gl.jpg'/>
-							{/* <MovieInfoWrapper>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-							</MovieInfoWrapper> */}
-						</MovieCard>
-
-						<MovieCard>
-							<MovieCardImage src='https://image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg'/>
-							{/* <MovieInfoWrapper>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-							</MovieInfoWrapper> */}
-						</MovieCard>
-
-						<MovieCard>
-							<MovieCardImage src='https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg'/>
-							{/* <MovieInfoWrapper>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-							</MovieInfoWrapper> */}
-						</MovieCard>
-
-						<MovieCard>
-							<MovieCardImage src='https://image.tmdb.org/t/p/w500/eEslKSwcqmiNS6va24Pbxf2UKmJ.jpg'/>
-							{/* <MovieInfoWrapper>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-							</MovieInfoWrapper> */}
-						</MovieCard>
-
-						<MovieCard>
-							<MovieCardImage src='https://image.tmdb.org/t/p/w500/x5o8cLZfEXMoZczTYWLrUo1P7UJ.jpg'/>
-							{/* <MovieInfoWrapper>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-							</MovieInfoWrapper> */}
-						</MovieCard>
-
-						<MovieCard>
-							<MovieCardImage src='https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg'/>
-							{/* <MovieInfoWrapper>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-							</MovieInfoWrapper> */}
-						</MovieCard>
-
-						<MovieCard>
-							<MovieCardImage src='https://image.tmdb.org/t/p/w500/v3KCBeX0CBlZnHZndimm7taYqwo.jpg'/>
-							{/* <MovieInfoWrapper>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-							</MovieInfoWrapper> */}
-						</MovieCard>
-
-						<MovieCard>
-							<MovieCardImage src='https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg'/>
-							{/* <MovieInfoWrapper>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-							</MovieInfoWrapper> */}
-						</MovieCard>
+						{
+							moviesData.map((movie, index) => (
+								<MovieCard>
+									<MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
+									{/* <MovieInfoWrapper>
+										Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
+									</MovieInfoWrapper> */}
+								</MovieCard>
+							))
+						}
 					</MovieCardsWrapper>
 					
 
@@ -418,6 +412,17 @@ const Home: NextPage = () => {
 			</Container>
 		</Page>
 	)
+}
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+
+    let result = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=8dc5ab4cbeee685d76ab97a9f22bf7ea&language=en-US&page=1');
+
+    return {
+        props: {
+            result: JSON.stringify(result.data.results)
+        }
+    }
 }
 
 export default Home;
