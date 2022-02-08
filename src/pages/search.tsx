@@ -2,6 +2,7 @@ import React from 'react';
 import Styled from 'styled-components';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { GetServerSidePropsContext } from 'next';
 import { NextRouter, withRouter } from 'next/router';
 
@@ -241,6 +242,7 @@ class Search extends React.Component<IWithRouterProps, IState>
                             <div style={{ marginLeft: 8, display: 'flex' }}>
                                 <Link 
                                     href={`/search?movie=${search}&category=${category !== '' ? category : 'all'}&rating=${rating !== '' ? rating : 'all'}&year=${year !== '' ? year : 'all'}`}
+                                    passHref
                                 >
                                     <Button>Search</Button>
                                 </Link>
@@ -306,9 +308,9 @@ class Search extends React.Component<IWithRouterProps, IState>
                         <MovieCardsWrapper>
                             {
                                 this.state.moviesData.map((movie, index) => (
-                                    <Link href={`/movie?id=${movie.id}`} key={index}>
+                                    <Link href={`/movie?id=${movie.id}`} passHref key={index}>
                                         <MovieCard>
-                                            <MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
+                                            <Image width="100%" height="150px" layout='responsive' alt={movie.title} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
                                         </MovieCard>
                                     </Link>
                                 ))

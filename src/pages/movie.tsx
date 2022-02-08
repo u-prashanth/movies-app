@@ -108,12 +108,9 @@ class Movie extends React.Component<IMovieProps, IState>
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-
-    let result = await GetMovieDetailsService(ctx.query.id! as string);
-
     return {
         props: {
-            data: JSON.stringify(result.data)
+            data: JSON.stringify((await GetMovieDetailsService(ctx.query.id! as string)).data)
         }
     }
 }

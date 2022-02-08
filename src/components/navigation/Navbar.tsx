@@ -147,16 +147,16 @@ export const Navbar = () => {
         <NavbarWrapper fadeToBlack={fadeToBlack}>
             <NavbarContainer>
                 <NavLeft>
-                    <Link href='/'>
+                    <Link href='/' passHref>
                         <Logo src='../../netflix-logo.svg'/>
                     </Link>
 
                     <LinksWrapper>
-                        <Link href='/'>
+                        <Link href='/' passHref>
                             <LinkText>Movies</LinkText>
                         </Link>
 
-                        <Link href='/about'>
+                        <Link href='/about' passHref>
                             <LinkText>About</LinkText>
                         </Link>
                     </LinksWrapper>

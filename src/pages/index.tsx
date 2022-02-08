@@ -2,7 +2,8 @@ import React from 'react';
 import Styled from 'styled-components';
 
 import Link from 'next/link';
-import type { GetServerSidePropsContext } from 'next'
+import Image from 'next/image';
+import type { GetServerSidePropsContext, GetStaticProps } from 'next'
 
 import Icon from '@mdi/react';
 import { mdiMagnify  } from '@mdi/js';
@@ -167,7 +168,6 @@ interface IState
 
 class Home extends React.Component<IHomeProps, IState> 
 {
-
 	constructor(props: IHomeProps)
 	{
 		super(props)
@@ -198,6 +198,7 @@ class Home extends React.Component<IHomeProps, IState>
     }
 
 	setMovieData = (value: string) => {
+		console.log(value);
         this.setState({ moviesData: JSON.parse(value) as IMovieData[] });
     }
 
@@ -236,6 +237,7 @@ class Home extends React.Component<IHomeProps, IState>
 							<div style={{ marginLeft: 8, display: 'flex' }}>
 								<Link 
 									href={`/search?movie=${search}&category=${category !== '' ? category : 'all'}&rating=${rating !== '' ? rating : 'all'}&year=${year !== '' ? year : 'all'}`}
+									passHref
 								>
 									<Button>Search</Button>
 								</Link>
@@ -301,9 +303,9 @@ class Home extends React.Component<IHomeProps, IState>
 						<MovieCardsWrapper>
 							{
 								this.state.moviesData.map((movie, index) => (
-									<Link href={`/movie?id=${movie.id}`} key={index}>
+									<Link href={`/movie?id=${movie.id}`} passHref key={index}>
 										<MovieCard key={index}>
-											<MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
+											<Image width="100%" height="150px" layout='responsive' alt={movie.title} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
 										</MovieCard>
 									</Link>
 								))
@@ -316,13 +318,10 @@ class Home extends React.Component<IHomeProps, IState>
 	}
 }
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-
-    let result = await GetPopularMoviesService();
-
+export async function getStaticProps(ctx: GetStaticProps) {
     return {
         props: {
-            result: JSON.stringify(result.data.results)
+            result: JSON.stringify(await (await GetPopularMoviesService()).data.results)
         }
     }
 }

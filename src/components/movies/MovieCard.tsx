@@ -44,7 +44,7 @@ export class MovieCard extends React.Component<IMovieCardProps, {}>
     {
         return (
             <Container>
-                <Image src={this.props.imageUrl}/>
+                <Image alt='' src={this.props.imageUrl}/>
             </Container>
         )
     }
