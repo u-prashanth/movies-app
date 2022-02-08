@@ -12,6 +12,7 @@ import axios from 'axios';
 
 import { Button, Dropdown, Page, TextField } from '../components';
 import { IMovieData } from '../interface';
+import { GetPopularMoviesService } from '../services';
 
 
 
@@ -397,7 +398,7 @@ const Home: NextPage = (props: any) => {
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
-    let result = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=8dc5ab4cbeee685d76ab97a9f22bf7ea&language=en-US&page=1');
+    let result = await GetPopularMoviesService();
 
     return {
         props: {

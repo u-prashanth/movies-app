@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Icon from '@mdi/react';
 import { mdiPlay, mdiInformationOutline, mdiMagnify  } from '@mdi/js';
 import { IMovieData } from '../interface';
+import { SearchMovieService } from '../services';
 
 
 const Container = Styled.div`
@@ -327,7 +328,7 @@ class Search extends React.Component<IWithRouterProps, IState>
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
-    let result = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=8dc5ab4cbeee685d76ab97a9f22bf7ea&language=en-US&query=${ctx.query.movie}&page=1&include_adult=false`);
+    let result = await SearchMovieService(ctx.query.movie! as string);
 
     return {
         props: {

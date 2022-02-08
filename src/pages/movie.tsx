@@ -5,6 +5,7 @@ import React from 'react';
 import Styled from 'styled-components';
 import { Page } from '../components';
 import { IMovieData } from '../interface';
+import { GetMovieDetailsService } from '../services';
 
 
 const Container = Styled.div`
@@ -101,7 +102,7 @@ class Movie extends React.Component<IMovieProps, IState>
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
-    let result = await axios.get(`https://api.themoviedb.org/3/movie/${ctx.query.id}?api_key=8dc5ab4cbeee685d76ab97a9f22bf7ea&language=en-US`);
+    let result = await GetMovieDetailsService(ctx.query.id! as string);
 
     return {
         props: {
