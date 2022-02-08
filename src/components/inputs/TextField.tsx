@@ -5,15 +5,29 @@ const Container = Styled.div`
     width: 100%;
     height: 42px;
 
-    border: 1px solid #dbdbdb;
-    border-raduis: 3px;
+    // border: 2px solid #888;
+    border-radius: 4px;
+    background-color: #555;
+
+    display: flex;
+    align-items: center;
+
+    overflow: clip;
 `
 
-const Input = Styled.input`
+const Input = Styled.input<{ withIcon?: boolean }>`
     width: 100%;
-    height: 40px;
+    height: 42px;
 
-    padding: 0px 8px;
+    padding: 0px 16px;
+    padding-left: ${props => props.withIcon ? '0px' : '16px'};
+    
+    background-color: #555;
+
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #888;
 
     border: none;
     &:focus
@@ -21,18 +35,39 @@ const Input = Styled.input`
         outline: none;
     }
 
-    &:placeholder
+    &::placeholder
     {
-        font-size: 12px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        color: #888;
     }
 `
 
-interface ITextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+const IconWrapper = Styled.div`
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+interface ITextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> 
+{
+    withIcon?: React.ReactNode | JSX.Element;
+}
 
 export const TextField: React.FunctionComponent<ITextFieldProps> = (props) => {
     return (
         <Container>
-            <Input {...props}/>
+            {
+                props.withIcon &&
+                <IconWrapper>
+                    {props.withIcon}
+                </IconWrapper>
+            }
+            <Input {...props} withIcon={props.withIcon !== undefined}/>
         </Container>
     )
 }

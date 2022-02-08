@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
-import { mdiPlay, mdiInformationOutline } from '@mdi/js';
-import { Button, Page } from '../components';
+import { mdiPlay, mdiInformationOutline, mdiMagnify  } from '@mdi/js';
+import { Button, Page, TextField } from '../components';
 
 const Container = Styled.div`
 	width: 100%:
@@ -20,7 +20,7 @@ const MovieCardContainer = Styled.div`
 	width: 100%:
 	height: 100%;
 
-	margin-top: -100px;
+	// margin-top: -100px;
 
 	@media only screen and (max-width: 576px)
 	{
@@ -38,7 +38,7 @@ const MovieCardsWrapper = Styled.div`
 	z-index: 1;
 
 	display: grid;
-	grid-template-columns: repeat(8, minmax(100px, 400px));
+	grid-template-columns: repeat(8, minmax(100px, 600px));
 	gap: 16px;
 	align-items: center;
 	justify-content: center;
@@ -99,7 +99,7 @@ const MovieCardImage = Styled.img`
 
 const BackdropContainer = Styled.div`
 	width: 100%;
-	height: 90vh;
+	height: 60vh;
 
 	position: relative;
 	z-index: 0;
@@ -173,7 +173,7 @@ const MovieTitle = Styled.span`
 const MovieDescription = Styled.p`
 	color: #fff;
 	font-size: 1.4vw;
-	font-weight: 400;
+	font-weight: 500;
 	margin-top: 16px;
 
 	position: relative;
@@ -227,6 +227,18 @@ const MovieSectionTitle = Styled.h2`
 	}
 `
 
+const SearchBoxWrapper = Styled.div`
+	max-width: 1024px;
+	width: 100%;
+
+	display: flex;
+	align-items: center;
+
+	margin-bottom: 100px;
+
+	padding: 0px 60px;
+`
+
 const Home: NextPage = () => {
 	return (
 		<Page title='Incredible Movies'>
@@ -254,6 +266,10 @@ const Home: NextPage = () => {
 						</ButtonContainer>
 					</MovieInfoWrapper>
 				</BackdropContainer>
+
+				<SearchBoxWrapper>
+					<TextField placeholder='Search Movies' withIcon={<Icon path={mdiMagnify} size={0.6} color='#888'/>} />
+				</SearchBoxWrapper>
 
 				<MovieCardContainer>
 					<MovieSectionTitle>Most Popular</MovieSectionTitle>

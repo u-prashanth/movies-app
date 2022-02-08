@@ -7,7 +7,7 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle }>`
     border-radius: 4px;
     border: none;
 
-    height: 44px;
+    height: 3.4rem;
 
     display: flex;
     align-items: center;
@@ -23,6 +23,11 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle }>`
     &:hover
     {
         filter: brightness(0.8);
+    }
+
+    &:active
+    {
+        filter: brightness(0.9);
     }
 
     cursor: pointer;
