@@ -198,9 +198,7 @@ class Home extends React.Component<IHomeProps, IState>
     }
 
 	setMovieData = (value: string) => {
-        this.setState({ moviesData: JSON.parse(value) as IMovieData[] }, () => {
-            console.log(this.state.moviesData)
-        })
+        this.setState({ moviesData: JSON.parse(value) as IMovieData[] });
     }
 
 	handleSearchText = (value: string) => {

@@ -197,9 +197,7 @@ class Search extends React.Component<IWithRouterProps, IState>
 
     setMovieData = (value: string) => {
         this.setState({ search: this.props.router.query.movie! as string })
-        this.setState({ moviesData: JSON.parse(value) as IMovieData[] }, () => {
-            console.log(this.state.moviesData)
-        })
+        this.setState({ moviesData: JSON.parse(value) as IMovieData[] });
     }
 
     shouldComponentUpdate(prevProps: Readonly<IWithRouterProps> & Readonly<{ children?: React.ReactNode; }>)
