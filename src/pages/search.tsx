@@ -308,8 +308,8 @@ class Search extends React.Component<IWithRouterProps, IState>
                             {
                                 this.state.moviesData.map((movie, index) => (
                                     <Link href={`/movie?id=${movie.id}`}>
-                                        <MovieCard>
-                                            <MovieCardImage key={index} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
+                                        <MovieCard key={index}>
+                                            <MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
                                             {/* <MovieInfoWrapper>
                                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
                                             </MovieInfoWrapper> */}

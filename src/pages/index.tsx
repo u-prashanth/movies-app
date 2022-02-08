@@ -377,7 +377,7 @@ const Home: NextPage = (props: any) => {
 					<MovieCardsWrapper>
 						{
 							moviesData.map((movie, index) => (
-								<MovieCard>
+								<MovieCard key={index}>
 									<MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
 									{/* <MovieInfoWrapper>
 										Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
