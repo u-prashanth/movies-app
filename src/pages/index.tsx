@@ -1,14 +1,19 @@
-import type { GetServerSidePropsContext, NextPage } from 'next'
 import React from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import Styled from 'styled-components';
+
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import type { GetServerSidePropsContext, NextPage } from 'next'
+
 import Icon from '@mdi/react';
-import { mdiPlay, mdiInformationOutline, mdiMagnify  } from '@mdi/js';
+import { mdiMagnify  } from '@mdi/js';
 import moment from 'moment';
-import { Button, Dropdown, Page, TextField } from '../components';
 import axios from 'axios';
+
+import { Button, Dropdown, Page, TextField } from '../components';
 import { IMovieData } from '../interface';
+
+
 
 const Container = Styled.div`
 	width: 100%:
@@ -296,30 +301,6 @@ const Home: NextPage = (props: any) => {
 	return (
 		<Page title='Incredible Movies'>
 			<Container>
-				{/* <BackdropContainer>
-					<Backdrop />
-					<MovieInfoWrapper>
-						<MovieTitle>Your Eyes Tell</MovieTitle>
-						<MovieDescription>
-							{
-								`
-								A tragic accident lead to Kaori's blindness, but she clings to life and the smaller pleasures it can still afford her. She meets Rui and begins to talk to him. Rui was once a promising kickboxer, but something happened in his past. Kaori's smile brings out a change in Rui. However, the two are connected in more than one way. Rui attempts to do what is right.
-								`
-							}
-						</MovieDescription>
-
-						<ButtonContainer>
-							<Button>
-								<Icon path={mdiPlay} size={1.4} color="#000"/> Play
-							</Button>
-
-							<Button buttonStyle='secondary'>
-							<Icon path={mdiInformationOutline} size={1.4} color="#fff"/> More Info
-							</Button>
-						</ButtonContainer>
-					</MovieInfoWrapper>
-				</BackdropContainer> */}
-
 				<SearchBoxWrapper>
 					<div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
 						<TextField 

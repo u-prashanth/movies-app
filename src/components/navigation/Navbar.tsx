@@ -23,7 +23,7 @@ const NavbarWrapper = Styled.nav<{ fadeToBlack: boolean }>`
         props => props.fadeToBlack ?
 
         `
-            background: #212121;
+            background: #000;
         `
 
         :
@@ -78,6 +78,8 @@ const NavRight = Styled.div`
 const Logo = Styled.img`
     width: 92.5px;
     object-fit: contain;
+
+    cursor: pointer;
 
     @media only screen and (max-width: 800px)
 	{
@@ -145,7 +147,9 @@ export const Navbar = () => {
         <NavbarWrapper fadeToBlack={fadeToBlack}>
             <NavbarContainer>
                 <NavLeft>
-                    <Logo src='../../netflix-logo.svg'/>
+                    <Link href='/'>
+                        <Logo src='../../netflix-logo.svg'/>
+                    </Link>
 
                     <LinksWrapper>
                         <Link href='/'>
