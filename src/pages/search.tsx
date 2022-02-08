@@ -1,13 +1,15 @@
 import React from 'react';
 import Styled from 'styled-components';
-import { NextRouter, withRouter } from 'next/router';
-import { Button, Dropdown, Page, TextField } from '../components';
-import axios from 'axios';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+
 import Link from 'next/link';
+import { GetServerSidePropsContext } from 'next';
+import { NextRouter, withRouter } from 'next/router';
+
 import Icon from '@mdi/react';
-import { mdiPlay, mdiInformationOutline, mdiMagnify  } from '@mdi/js';
+import { mdiMagnify  } from '@mdi/js';
+
 import { IMovieData } from '../interface';
+import { Button, Dropdown, Page, TextField } from '../components';
 import { GetPopularMoviesService, SearchMovieService } from '../services';
 
 

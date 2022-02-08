@@ -1,10 +1,11 @@
-import axios from 'axios';
-import { GetServerSidePropsContext } from 'next';
-import { NextRouter, withRouter } from 'next/router';
 import React from 'react';
 import Styled from 'styled-components';
-import { Page } from '../components';
+
+import { GetServerSidePropsContext } from 'next';
+import { NextRouter, withRouter } from 'next/router';
+
 import { IMovieData } from '../interface';
+import { Page } from '../components';
 import { GetMovieDetailsService } from '../services';
 
 
@@ -96,7 +97,7 @@ class Movie extends React.Component<IMovieProps, IState>
 
                     <MovieTitle>{this.state.movieData?.title || ''}</MovieTitle>
 
-                    
+
                 </Container>
             </Page>
         )    
