@@ -2,13 +2,10 @@ import React from 'react';
 import Styled from 'styled-components';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import type { GetServerSidePropsContext, NextPage } from 'next'
+import type { GetServerSidePropsContext } from 'next'
 
 import Icon from '@mdi/react';
 import { mdiMagnify  } from '@mdi/js';
-import moment from 'moment';
-import axios from 'axios';
 
 import { Button, Dropdown, Page, TextField } from '../components';
 import { IMovieData } from '../interface';
@@ -102,128 +99,6 @@ const MovieCardImage = Styled.img`
 	object-fit: contain;
 `
 
-// const MovieInfoWrapper = Styled.div`
-// 	width: 100%;
-// 	height: auto;
-
-// 	background-color: #fff;
-
-// 	padding: 16px;
-// `
-
-const BackdropContainer = Styled.div`
-	width: 100%;
-	height: 60vh;
-
-	position: relative;
-	z-index: 0;
-
-	display: flex;
-	align-items: center;
-
-	padding: 60px;
-
-	@media only screen and (max-width: 576px)
-	{
-		padding: 16px;
-		height: 30vh;
-	}
-`
-
-const Backdrop = Styled.div`
-	width: 100%;
-	height: 100%;
-
-	object-fit: cover;
-
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 0;
-
-	// background: linear-gradient(to bottom, rgba(33,33,33,0) 0%, rgba(33,33,33,0.23) 45%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-
-	background: url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background: -moz-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(33,33,33,0)), color-stop(80%, rgba(33,33,33,0.71)), color-stop(100%, rgba(33,33,33,1))), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-
-	background: -webkit-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-
-	background: -o-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-
-	background: -ms-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-
-	background: linear-gradient(to bottom, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-
-	background-size: cover;
-	background-position: center;
-`
-
-
-const MovieInfoWrapper = Styled.div`
-	width: 50%;
-
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-`
-
-const MovieTitle = Styled.span`
-	color: #fff;
-	font-size: 4vw;
-	font-weight: 900;
-
-	position: relative;
-	z-index: 1;
-
-	@media only screen and (max-width: 800px)
-	{
-		font-size: 14px;
-	}
-`
-
-const MovieDescription = Styled.p`
-	color: #fff;
-	font-size: 1.4vw;
-	font-weight: 500;
-	margin-top: 16px;
-
-	position: relative;
-	z-index: 1;
-
-	overflow: hidden;
-    text-overflow: ellipsis;
-
-	display: -webkit-box;
-    line-clamp: 3; 
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-
-	@media only screen and (max-width: 800px)
-	{
-		font-size: 10px;
-		margin-top: 8px;
-	}
-`
-
-const ButtonContainer = Styled.div`
-	width: 100%;
-	position: relative;
-	z-index: 1;
-	
-	display: flex;
-	align-items: center;
-
-	margin-top: 16px;
-
-	& > *
-	{
-		margin-right: 8px;
-	}
-`
-
 const MovieSectionTitle = Styled.h2`
 	font-size: 1.4vw;
 	font-weight: 700;
@@ -269,131 +144,169 @@ const DropdownWrapper = Styled.div`
 	}
 `
 
-const Home: NextPage = (props: any) => {
-	const [ category, setCategory ] = React.useState('');
-	const [ year, setYear ] = React.useState('');
-	const [ rating, setRating ] = React.useState('');
-	const [ search, setSearch ] = React.useState('');
-	const [ moviesData, setMoviesData ] = React.useState([] as unknown as IMovieData[]);
+interface IHomeProps extends GetServerSidePropsContext
+{
+    result: string;
+}
 
-	const router = useRouter();
+interface IState
+{
+    moviesData: IMovieData[];
+    search: string;
+    category: string;
+    rating: string;
+    year: string;
+}
 
-	React.useEffect(() => {
-		console.log('Query: ', JSON.parse(props.result))
-		setMoviesData(JSON.parse(props.result) as IMovieData[]);
-	}, [])
+class Home extends React.Component<IHomeProps, IState> 
+{
 
-	const handleSearchText = (value: string) => {
-		setSearch(value)
+	constructor(props: IHomeProps)
+	{
+		super(props)
+
+		this.state = {
+            moviesData: [],
+            search: '',
+            category: '',
+            rating: '',
+            year: ''
+        }
 	}
 
-	const handleCategorySelection = (value: string) => {
-		setCategory(value);
+	componentDidMount()
+    {
+        this.setMovieData(this.props.result);
+    }
+
+	componentDidUpdate(prevProps: Readonly<IHomeProps> & Readonly<{ children?: React.ReactNode; }>)
+    {
+        if(this.props !== prevProps)
+            this.setMovieData(this.props.result);
+    }
+
+	shouldComponentUpdate(prevProps: Readonly<IHomeProps> & Readonly<{ children?: React.ReactNode; }>)
+    {
+        return !(this.props !== prevProps);
+    }
+
+	setMovieData = (value: string) => {
+        this.setState({ moviesData: JSON.parse(value) as IMovieData[] }, () => {
+            console.log(this.state.moviesData)
+        })
+    }
+
+	handleSearchText = (value: string) => {
+		this.setState({ search: value })
 	}
 
-	const handleYearSelection = (value: string) => {
-		setYear(value);
+	handleCategorySelection = (value: string) => {
+		this.setState({ category: value });
 	}
 
-	const handleRatingSelection = (value: string) => {
-		setRating(value);
+	handleYearSelection = (value: string) => {
+		this.setState({ year: value });
 	}
 
-	return (
-		<Page title='Incredible Movies'>
-			<Container>
-				<SearchBoxWrapper>
-					<div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-						<TextField 
-							placeholder='Search Movies' 
-							withIcon={<Icon path={mdiMagnify} size={0.6} color='#888'/>} 
-							value={search}
-							onChange={e => handleSearchText(e.target.value)}
-						/>
-						<div style={{ marginLeft: 8, display: 'flex' }}>
-							<Link 
-								href={`/search?movie=${search}&category=${category !== '' ? category : 'all'}&rating=${rating !== '' ? rating : 'all'}&year=${year !== '' ? year : 'all'}`}
-							>
-								<Button>Search</Button>
-							</Link>
+	handleRatingSelection = (value: string) => {
+		this.setState({ rating: value });
+	}
+
+	render()
+	{
+		const { search, category, rating, year } = this.state;
+
+		return (
+			<Page title='Incredible Movies'>
+				<Container>
+					<SearchBoxWrapper>
+						<div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+							<TextField 
+								placeholder='Search Movies' 
+								withIcon={<Icon path={mdiMagnify} size={0.6} color='#888'/>} 
+								value={search}
+								onChange={e => this.handleSearchText(e.target.value)}
+							/>
+	
+							<div style={{ marginLeft: 8, display: 'flex' }}>
+								<Link 
+									href={`/search?movie=${search}&category=${category !== '' ? category : 'all'}&rating=${rating !== '' ? rating : 'all'}&year=${year !== '' ? year : 'all'}`}
+								>
+									<Button>Search</Button>
+								</Link>
+							</div>
 						</div>
-					</div>
-					<DropdownWrapper style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-						<Dropdown
-							placeholder='Category'
-							value={category}
-							options={
-								[
-									'Action',
-									'Adventure',
-									'Crime',
-									'Comedy',
-									'Horror',
-									'Mystery',
-									'Romance',
-									'Thriller'
-								]
+						<DropdownWrapper style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+							<Dropdown
+								placeholder='Category'
+								value={category}
+								options={
+									[
+										'Action',
+										'Adventure',
+										'Crime',
+										'Comedy',
+										'Horror',
+										'Mystery',
+										'Romance',
+										'Thriller'
+									]
+								}
+								onChange={e => this.handleCategorySelection(e.target.value)}
+							/>
+	
+							<Dropdown
+								placeholder='Rating'
+								value={rating}
+								options={
+									[
+										'9+',
+										'8+',
+										'7+',
+										'6+',
+										'5+',
+										'4+',
+										'3+',
+										'2+',
+										'1+'
+									]
+								}
+								onChange={e => this.handleRatingSelection(e.target.value)}
+							/>
+	
+							<Dropdown
+								placeholder='Year'
+								value={year}
+								options={
+									[
+										'2022',
+										'2021',
+										'2020',
+										'2019',
+										'2018',
+									]
+								}
+								onChange={e => this.handleYearSelection(e.target.value)}
+							/>
+						</DropdownWrapper>
+					</SearchBoxWrapper>
+	
+					<MovieCardContainer>
+						<MovieSectionTitle>Most Popular</MovieSectionTitle>
+						<MovieCardsWrapper>
+							{
+								this.state.moviesData.map((movie, index) => (
+									<MovieCard key={index}>
+										<MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
+									</MovieCard>
+								))
 							}
-							onChange={e => handleCategorySelection(e.target.value)}
-						/>
-
-						<Dropdown
-							placeholder='Rating'
-							value={rating}
-							options={
-								[
-									'9+',
-									'8+',
-									'7+',
-									'6+',
-									'5+',
-									'4+',
-									'3+',
-									'2+',
-									'1+'
-								]
-							}
-							onChange={e => handleRatingSelection(e.target.value)}
-						/>
-
-						<Dropdown
-							placeholder='Year'
-							value={year}
-							options={
-								[
-									'2022',
-									'2021',
-									'2020',
-									'2019',
-									'2018',
-								]
-							}
-							onChange={e => handleYearSelection(e.target.value)}
-						/>
-					</DropdownWrapper>
-				</SearchBoxWrapper>
-
-				<MovieCardContainer>
-					<MovieSectionTitle>Most Popular</MovieSectionTitle>
-					<MovieCardsWrapper>
-						{
-							moviesData.map((movie, index) => (
-								<MovieCard key={index}>
-									<MovieCardImage src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
-									{/* <MovieInfoWrapper>
-										Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eaque.
-									</MovieInfoWrapper> */}
-								</MovieCard>
-							))
-						}
-					</MovieCardsWrapper>
-					
-
-					
-				</MovieCardContainer>
-			</Container>
-		</Page>
-	)
+						</MovieCardsWrapper>
+					</MovieCardContainer>
+				</Container>
+			</Page>
+		)
+	}
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {

@@ -88,12 +88,15 @@ class Movie extends React.Component<IMovieProps, IState>
         return (
             <Page title="Spiderman">
                 <Container>
-                    <MovieTitle>{this.state.movieData?.title || ''}</MovieTitle>
                     <VideoWrapper>
                         <div className='embed-container'>
                             <iframe src='https://www.youtube.com/embed/ZYzbalQ6Lg8' frameBorder='0' allowFullScreen></iframe>
                         </div>
                     </VideoWrapper>
+
+                    <MovieTitle>{this.state.movieData?.title || ''}</MovieTitle>
+
+                    
                 </Container>
             </Page>
         )    

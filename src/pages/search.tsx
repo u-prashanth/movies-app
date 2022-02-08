@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Icon from '@mdi/react';
 import { mdiPlay, mdiInformationOutline, mdiMagnify  } from '@mdi/js';
 import { IMovieData } from '../interface';
-import { SearchMovieService } from '../services';
+import { GetPopularMoviesService, SearchMovieService } from '../services';
 
 
 const Container = Styled.div`
@@ -207,9 +207,7 @@ class Search extends React.Component<IWithRouterProps, IState>
 
 	handleSearchText(value: string)
     {
-		this.setState({ search: value }, () => {
-            console.log('value', this.state.search)
-        })
+		this.setState({ search: value })
 	}
 
 	handleCategorySelection = (value: string) => {
@@ -328,7 +326,7 @@ class Search extends React.Component<IWithRouterProps, IState>
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
-    let result = await SearchMovieService(ctx.query.movie! as string);
+    let result = ctx.query.movie === '' ? await GetPopularMoviesService() : await SearchMovieService(ctx.query.movie! as string);
 
     return {
         props: {
