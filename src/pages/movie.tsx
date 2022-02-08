@@ -35,9 +35,14 @@ const MovieTitle = Styled.div`
 
 const VideoWrapper = Styled.div`
     width: 100%;
-    height: 60vh;
+    height: 60%;
 
-    margin-top: 16px;
+    @media only screen and (max-width: 1000px)
+    {
+        height: 40%;
+    }
+
+    margin-bottom: 16px;
 `
 
 interface IMovieProps extends GetServerSidePropsContext
