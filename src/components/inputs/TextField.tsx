@@ -4,8 +4,7 @@ import Styled from 'styled-components';
 const Container = Styled.div`
     width: 100%;
     height: 42px;
-
-    // border: 2px solid #888;
+    
     border-radius: 4px;
     background-color: #555;
 
@@ -17,7 +16,7 @@ const Container = Styled.div`
 
 const Input = Styled.input<{ withIcon?: boolean }>`
     width: 100%;
-    height: 42px;
+    height: inherit;
 
     padding: 0px 16px;
     padding-left: ${props => props.withIcon ? '0px' : '16px'};

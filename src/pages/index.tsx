@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
+import React from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
 import { mdiPlay, mdiInformationOutline, mdiMagnify  } from '@mdi/js';
-import { Button, Page, TextField } from '../components';
+import moment from 'moment';
+import { Button, Dropdown, Page, TextField } from '../components';
 
 const Container = Styled.div`
 	width: 100%:
@@ -14,6 +16,8 @@ const Container = Styled.div`
 	flex-direction: column;
     align-items: center;
     justify-content: center;
+
+	padding-top: 120px;
 `
 
 const MovieCardContainer = Styled.div`
@@ -232,18 +236,40 @@ const SearchBoxWrapper = Styled.div`
 	width: 100%;
 
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 
 	margin-bottom: 100px;
 
 	padding: 0px 60px;
+
+	@media only screen and (max-width: 576px)
+	{
+		padding: 0px 16px;
+	}
+`
+
+const DropdownWrapper = Styled.div`
+	width: 100%;
+	margin-top: 8px;
+
+	& > *
+	{
+		margin-right: 16px;
+	}
 `
 
 const Home: NextPage = () => {
+	const [ category, setCategory ] = React.useState('');
+
+	const handleCategorySelection = (value: string) => {
+		setCategory(value);
+	}
+
 	return (
 		<Page title='Incredible Movies'>
 			<Container>
-				<BackdropContainer>
+				{/* <BackdropContainer>
 					<Backdrop />
 					<MovieInfoWrapper>
 						<MovieTitle>Your Eyes Tell</MovieTitle>
@@ -265,10 +291,65 @@ const Home: NextPage = () => {
 							</Button>
 						</ButtonContainer>
 					</MovieInfoWrapper>
-				</BackdropContainer>
+				</BackdropContainer> */}
 
 				<SearchBoxWrapper>
 					<TextField placeholder='Search Movies' withIcon={<Icon path={mdiMagnify} size={0.6} color='#888'/>} />
+					<DropdownWrapper style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+						<Dropdown
+							placeholder='Category'
+							value={category}
+							options={
+								[
+									'Action',
+									'Adventure',
+									'Crime',
+									'Comedy',
+									'Horror',
+									'Mystery',
+									'Romance',
+									'Thriller'
+								]
+							}
+							onChange={e => handleCategorySelection(e.target.value)}
+						/>
+
+						<Dropdown
+							placeholder='Rating'
+							value={category}
+							options={
+								[
+									'Action',
+									'Adventure',
+									'Crime',
+									'Comedy',
+									'Horror',
+									'Mystery',
+									'Romance',
+									'Thriller'
+								]
+							}
+							onChange={e => handleCategorySelection(e.target.value)}
+						/>
+
+						<Dropdown
+							placeholder='Year'
+							value={category}
+							options={
+								[
+									'Action',
+									'Adventure',
+									'Crime',
+									'Comedy',
+									'Horror',
+									'Mystery',
+									'Romance',
+									'Thriller'
+								]
+							}
+							onChange={e => handleCategorySelection(e.target.value)}
+						/>
+					</DropdownWrapper>
 				</SearchBoxWrapper>
 
 				<MovieCardContainer>
