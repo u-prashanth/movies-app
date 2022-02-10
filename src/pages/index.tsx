@@ -8,8 +8,8 @@ import type { GetServerSidePropsContext, GetStaticProps } from 'next'
 import Icon from '@mdi/react';
 import { mdiMagnify  } from '@mdi/js';
 
-import { Button, Dropdown, MovieThumbnailSection, Page, TextField } from '../components';
-import { IMovieData } from '../interface';
+import { Button, Dropdown, FeaturedMovieSection, MovieThumbnailSection, Page, TextField } from '../components';
+import { IMovie, IMovieData } from '../interface';
 import { GetPopularMoviesService } from '../services';
 
 
@@ -105,22 +105,22 @@ const MovieCardImage = Styled.img`
 	object-fit: contain;
 `
 
-const MovieSectionTitle = Styled.h2`
-	font-size: 1.4vw;
-	font-weight: 700;
-	color: #fff;
+// const MovieSectionTitle = Styled.h2`
+// 	font-size: 1.4vw;
+// 	font-weight: 700;
+// 	color: #fff;
 
-	position: relative;
-	z-index: 1;
+// 	position: relative;
+// 	z-index: 1;
 
-	padding-left: 44px;
+// 	padding-left: 44px;
 
-	@media only screen and (max-width: 800px)
-	{
-		font-size: 12px;
-		padding-left: 16px;
-	}
-`
+// 	@media only screen and (max-width: 800px)
+// 	{
+// 		font-size: 12px;
+// 		padding-left: 16px;
+// 	}
+// `
 
 const SearchBoxWrapper = Styled.div`
 	max-width: 1024px;
@@ -149,6 +149,8 @@ const DropdownWrapper = Styled.div`
 		margin-right: 16px;
 	}
 `
+
+
 
 interface IHomeProps extends GetServerSidePropsContext
 {
@@ -318,18 +320,32 @@ interface IState
 
 // export default Home;
 
+interface IHomeProps
+{
+	popularMovies: IMovie[];
+}
 
+const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
-const Home: React.FunctionComponent = (props) => {
+	const [ movies, setMovies ] = React.useState([] as unknown as IMovie[]);
+	
+	React.useEffect(() => {
+		setMovies(props.popularMovies);
+	}, [props.popularMovies])
+
 	return (
 		<Page title='Incredible Movies'>
 			<Container>
-				<MovieThumbnailSection title='Popular'>
+				<FeaturedMovieSection>
+
+				</FeaturedMovieSection>
+
+				<MovieThumbnailSection title='Popular' style={{ marginTop: -120 }}>
 					{
-						[...Array(20)].map((e, i) => (
+						movies.map((movie, i) => (
 							<Link href="/" passHref key={i}>
 								<MovieCard>
-									<Image width="100%" height="150px" layout='responsive' alt="" src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"/>
+									<Image width="100%" height="150px" layout='responsive' alt="" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
 								</MovieCard>
 							</Link>
 						))
@@ -338,6 +354,14 @@ const Home: React.FunctionComponent = (props) => {
 			</Container>
 		</Page>
 	)
+}
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+    return {
+        props: {
+            popularMovies: JSON.parse(JSON.stringify(await (await GetPopularMoviesService()).data.results))
+        }
+    }
 }
 
 export default Home;

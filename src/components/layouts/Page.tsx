@@ -34,7 +34,7 @@ export const Page: React.FunctionComponent<IPageProps> = (props) => {
 
             <Navbar />
 
-            <Body enableTopPadding={props.enableTopPadding || true}>
+            <Body enableTopPadding={props.enableTopPadding}>
                 {props.children}
             </Body>
         </Container>

@@ -73,14 +73,14 @@ const SectionTitle = Styled.h2`
 	}
 `
 
-interface IMovieThumbnailSectionProps
+interface IMovieThumbnailSectionProps extends React.HTMLAttributes<HTMLDivElement>
 {
     title: string;
 }
 
 export const MovieThumbnailSection: React.FunctionComponent<IMovieThumbnailSectionProps> = (props) => {
 	return (
-		<Container>
+		<Container {...props}>
 			<SectionTitle>{props.title}</SectionTitle>
 			<ThumbnailsWrapper>
 				{props.children}
