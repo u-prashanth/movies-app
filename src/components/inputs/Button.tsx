@@ -1,7 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle, spanWidth?: boolean }>`
+const Wrapper = Styled.button<{ buttonStyle?: ButtonStyle, spanWidth?: boolean }>`
     color: ${props => props.buttonStyle === 'primary' ? '#000' : '#fff'};
     background-color: ${props => props.buttonStyle === 'primary' ? '#fff' : '#6d6d6eb3'};
     border-radius: 4px;
@@ -11,10 +11,6 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle, spanWidth?: boo
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 14px;
-    font-weight: 600;
-    white-space: pre;
 
     padding: 0px 24px;
 
@@ -30,41 +26,48 @@ const ButtonWrapper = Styled.button<{ buttonStyle?: ButtonStyle, spanWidth?: boo
 
     cursor: pointer;
 
-    @media only screen and (max-width: 576px)
+    & > *:nth-child(2)
     {
-        font-size: 12px;
-        height: 40px;
-        padding: 0px 22px;
+        padding-left: 8px;
+        margin-right: 8px;
+    }
+
+    @media only screen and (max-width: 800px)
+    {
+        height: 30px;
+        padding: 0px 16px;
+
+        & > p
+        {
+            font-size: 11px;
+        }
 
         & > *:first-child
         {
-            transform: scale(0.5);
+            transform: scale(0.8);
         }
     }
 `
 
+const ButtonText = Styled.p`
+    font-size: 14px;
+    font-weight: 600;
+    white-space: pre;
+`
+
 type ButtonStyle = "primary" | "secondary";
 
-interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
+interface IButtonProps extends React.HTMLAttributes<HTMLDivElement>
 {
     buttonStyle?: ButtonStyle;
+    icon?: React.ReactNode | JSX.Element;
 }
 
-export class Button extends React.Component<IButtonProps, {}>
-{
-    constructor(props: IButtonProps)
-    {
-        super(props);
-    }
-
-    render(): React.ReactNode 
-    {
-        const { children, buttonStyle } = this.props;
-
-        return (
-            <ButtonWrapper buttonStyle={buttonStyle || 'primary'} {...this.props}>
-                {children}
-            </ButtonWrapper>
-        )
-    }
+export const Button: React.FunctionComponent<IButtonProps> = (props) => {
+    return (
+        <Wrapper buttonStyle={props.buttonStyle || 'primary'}>
+            {props.icon}
+            <ButtonText>{props.children}</ButtonText>
+        </Wrapper>
+    )
 }

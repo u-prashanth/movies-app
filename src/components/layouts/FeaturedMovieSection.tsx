@@ -1,14 +1,10 @@
 import React from 'react';
 import Styled from 'styled-components';
 import Icon from '@mdi/react';
-import { mdiPlay, mdiInformationOutline } from '@mdi/js';
+import { mdiInformationOutline } from '@mdi/js';
 import { Button } from '..';
 
 const Container = Styled.div`
-    width: 100%;
-`
-
-const BackdropContainer = Styled.div`
 	width: 100%;
 	height: 90vh;
 	position: relative;
@@ -45,6 +41,27 @@ const BackdropContainer = Styled.div`
 	}
 `
 
+const Backdrop = Styled.div<{ backdropURL?: string }>`
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+
+	background: url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
+	background: -moz-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(33,33,33,0)), color-stop(80%, rgba(33,33,33,0.71)), color-stop(100%, rgba(33,33,33,1))), url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
+	background: -webkit-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
+	background: -o-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
+	background: -ms-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
+	background: linear-gradient(to bottom, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
+	
+    background-position: center;
+	background-size: cover;
+`
+
 const GradientBox = Styled.div`
     width: 70%;
     height: 100%;
@@ -59,27 +76,6 @@ const GradientBox = Styled.div`
     background: -o-linear-gradient(13deg,rgba(33,33,33,0.71) 0,rgba(0,0,0,0) 85%);
     background: linear-gradient(77deg,rgba(33,33,33,0.71) 0,rgba(0,0,0,0) 85%);
 `
-
-const Backdrop = Styled.div`
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 0;
-	// background: linear-gradient(to bottom, rgba(33,33,33,0) 0%, rgba(33,33,33,0.23) 45%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background: url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background: -moz-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(33,33,33,0)), color-stop(80%, rgba(33,33,33,0.71)), color-stop(100%, rgba(33,33,33,1))), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background: -webkit-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background: -o-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background: -ms-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background: linear-gradient(to bottom, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original/v5CEt88iDsuoMaW1Q5Msu9UZdEt.jpg') no-repeat;
-	background-size: cover;
-	background-position: center;
-`
-
 
 const MovieInfoWrapper = Styled.div`
 	width: 50%;
@@ -132,53 +128,31 @@ const ButtonContainer = Styled.div`
 	display: flex;
 	align-items: center;
 	margin-top: 16px;
-	& > *
-	{
-		margin-right: 8px;
-	}
 `
 
-const MovieSectionTitle = Styled.h2`
-	font-size: 1.4vw;
-	font-weight: 700;
-	color: #fff;
-	position: relative;
-	z-index: 1;
-	padding-left: 44px;
-	@media only screen and (max-width: 800px)
-	{
-		font-size: 12px;
-		padding-left: 16px;
-	}
-`
+interface IFeaturedMovieSectionProps
+{
+    id: number;
+    title: string;
+    overview: string;
+    backdropURL: string;
+}
 
-export const FeaturedMovieSection: React.FunctionComponent = () => {
+export const FeaturedMovieSection: React.FunctionComponent<IFeaturedMovieSectionProps> = (props) => {
     return (
         <Container>
-            <BackdropContainer>
-                <Backdrop />
-                <GradientBox />
-                <MovieInfoWrapper>
-                    <MovieTitle>Your Eyes Tell</MovieTitle>
-                    <MovieDescription>
-                        {
-                            `
-                            A tragic accident lead to Kaori's blindness, but she clings to life and the smaller pleasures it can still afford her. She meets Rui and begins to talk to him. Rui was once a promising kickboxer, but something happened in his past. Kaori's smile brings out a change in Rui. However, the two are connected in more than one way. Rui attempts to do what is right.
-                            `
-                        }
-                    </MovieDescription>
+            <Backdrop backdropURL={props.backdropURL}/>
+            <GradientBox />
+            <MovieInfoWrapper>
+                <MovieTitle>{props.title}</MovieTitle>
+                <MovieDescription>{props.overview}</MovieDescription>
 
-                    <ButtonContainer>
-                        <Button>
-                            <Icon path={mdiPlay} size={1.4} color="#000"/> Play
-                        </Button>
-
-                        <Button buttonStyle='secondary'>
-                        <Icon path={mdiInformationOutline} size={1.4} color="#fff"/> More Info
-                        </Button>
-                    </ButtonContainer>
-                </MovieInfoWrapper>
-            </BackdropContainer>
+                <ButtonContainer>
+                    <Button buttonStyle='secondary' icon={<Icon path={mdiInformationOutline} size={0.7} color="#fff"/>}>
+                        More Info
+                    </Button>
+                </ButtonContainer>
+            </MovieInfoWrapper>
         </Container>
     )
 }
