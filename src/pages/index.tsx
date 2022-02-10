@@ -4,9 +4,14 @@ import Styled from 'styled-components';
 import Link from 'next/link';
 import type { GetServerSidePropsContext, GetStaticProps } from 'next'
 
+
 import { Button, Dropdown, FeaturedMovieSection, MovieCard, MovieThumbnailSection, Page, TextField } from '../components';
 import { IMovie, IMovieData } from '../interface';
 import { GetPopularMoviesService } from '../services';
+
+// Redux
+import { useAppDispatch, useAppSelector } from '../redux/reduxHook';
+import { setPopularMovies } from '../redux';
 
 
 
@@ -29,25 +34,33 @@ interface IHomeProps
 
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
-	const [ movies, setMovies ] = React.useState([] as unknown as IMovie[]);
+	// Dispatch
+	const dispatch = useAppDispatch();
+
+	// Redux State
+	const movies = useAppSelector(state => state.movies.popularMovies);
 	
 	React.useEffect(() => {
-		setMovies(props.popularMovies);
-	}, [props.popularMovies])
+		dispatch(setPopularMovies(props.popularMovies));
+		console.log(Math.floor(Math.random() * movies.length))
+	}, [movies])
 
 	return (
 		<Page title='Incredible Movies'>
-			<Container>
-				<FeaturedMovieSection id={0} title={''} overview={''} backdropURL={''} />
+			{
+				movies.length &&
+				<Container>
+					<FeaturedMovieSection movie={movies[Math.floor(Math.random() * movies.length)]} />
 
-				<MovieThumbnailSection title='Popular' style={{ marginTop: -120 }}>
-					{
-						movies.map((movie, i) => (
-							<MovieCard key={i} movie={movie}/>
-						))
-					}
-				</MovieThumbnailSection>
-			</Container>
+					<MovieThumbnailSection title='Popular' style={{ marginTop: -120 }}>
+						{
+							movies.map((movie, i) => (
+								<MovieCard key={i} movie={movie}/>
+							))
+						}
+					</MovieThumbnailSection>
+				</Container>
+			}
 		</Page>
 	)
 }

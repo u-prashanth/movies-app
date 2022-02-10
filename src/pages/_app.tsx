@@ -5,11 +5,12 @@ import { AppProps } from 'next/app'
 import Router from 'next/router';
 import NProgress from 'nprogress';
 
+// Redux
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
+
 
 const handleOnChangeStart = () => {
-	NProgress.configure({
-
-	})
     NProgress.start();
 }
 
@@ -23,7 +24,9 @@ Router.events.on('routeChangeComplete', handleOnChangeComplete)
 
 function App({ Component, pageProps }: AppProps) {
 	return (
-		<Component {...pageProps} />
+		<Provider store={store}>
+			<Component {...pageProps} />
+		</Provider>
   	)
 }
 

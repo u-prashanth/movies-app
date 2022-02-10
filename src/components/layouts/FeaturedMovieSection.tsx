@@ -3,6 +3,8 @@ import Styled from 'styled-components';
 import Icon from '@mdi/react';
 import { mdiInformationOutline } from '@mdi/js';
 import { Button } from '..';
+import { IMovie } from '../../interface';
+import Link from 'next/link';
 
 const Container = Styled.div`
 	width: 100%;
@@ -58,7 +60,7 @@ const Backdrop = Styled.div<{ backdropURL?: string }>`
 	background: -ms-linear-gradient(top, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
 	background: linear-gradient(to bottom, rgba(33,33,33,0) 0%, rgba(33,33,33,0.71) 80%, rgba(33,33,33,1) 100%), url('https://image.tmdb.org/t/p/original${props => props.backdropURL}') no-repeat;
 	
-    background-position: center;
+    background-position: top;
 	background-size: cover;
 `
 
@@ -132,25 +134,27 @@ const ButtonContainer = Styled.div`
 
 interface IFeaturedMovieSectionProps
 {
-    id: number;
-    title: string;
-    overview: string;
-    backdropURL: string;
+    movie: IMovie;
 }
 
 export const FeaturedMovieSection: React.FunctionComponent<IFeaturedMovieSectionProps> = (props) => {
+
+    const { id, title, overview, backdrop_path } = props.movie;
+
     return (
         <Container>
-            <Backdrop backdropURL={props.backdropURL}/>
+            <Backdrop backdropURL={backdrop_path}/>
             <GradientBox />
             <MovieInfoWrapper>
-                <MovieTitle>{props.title}</MovieTitle>
-                <MovieDescription>{props.overview}</MovieDescription>
+                <MovieTitle>{title}</MovieTitle>
+                <MovieDescription>{overview}</MovieDescription>
 
                 <ButtonContainer>
-                    <Button buttonStyle='secondary' icon={<Icon path={mdiInformationOutline} size={0.7} color="#fff"/>}>
-                        More Info
-                    </Button>
+                    <Link passHref href={`/movie?id=${id}`}>
+                        <Button buttonStyle='secondary' icon={<Icon path={mdiInformationOutline} size={0.7} color="#fff"/>}>
+                            More Info
+                        </Button>
+                    </Link>
                 </ButtonContainer>
             </MovieInfoWrapper>
         </Container>
