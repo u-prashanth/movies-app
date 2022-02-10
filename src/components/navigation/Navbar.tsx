@@ -66,7 +66,7 @@ const NavbarContainer = Styled.div`
 
     @media only screen and (max-width: 576px)
 	{
-		padding: 0px 16px;
+		padding: 0px 12px;
 	}
 `
 
