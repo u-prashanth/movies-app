@@ -27,6 +27,15 @@ const Container = Styled.div`
     justify-content: center;
 `
 
+const WrapWithMarginTop = Styled.div`
+	margin-top: -120px;
+
+	@media only screen and (max-width: 576px)
+	{
+		margin-top: -80px;
+	}
+`
+
 interface IHomeProps
 {
 	popularMovies: IMovie[];
@@ -52,13 +61,15 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 				<Container>
 					<FeaturedMovieSection movie={movies[Math.floor(Math.random() * movies.length)]} />
 
-					<MovieThumbnailSection title='Popular' style={{ marginTop: -120 }}>
-						{
-							movies.map((movie, i) => (
-								<MovieCard key={i} movie={movie}/>
-							))
-						}
-					</MovieThumbnailSection>
+					<WrapWithMarginTop>
+						<MovieThumbnailSection title='Popular'>
+							{
+								movies.map((movie, i) => (
+									<MovieCard key={i} movie={movie}/>
+								))
+							}
+						</MovieThumbnailSection>
+					</WrapWithMarginTop>
 				</Container>
 			}
 		</Page>
