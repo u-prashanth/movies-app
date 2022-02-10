@@ -1,8 +1,15 @@
 import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import Styled from 'styled-components';
+
+import { IMovie } from '../../interface';
 
 const Container = Styled.div`
     min-width: 100px;
+
+    position: relative;
+    z-index: 10;
 
     display: flex;
     flex-direction: column;
@@ -12,40 +19,23 @@ const Container = Styled.div`
 
     cursor: pointer;
 
-    position: relative;
-    z-index: 1;
-
     &:hover
     {
         filter: brightness(1.1);
     }
 `
 
-const Image = Styled.img`
-    width: 100%;
-    // height: 200px;
-
-    object-fit: contain;
-`
-
-interface IMovieCardProps
+interface IMovieCardProps extends React.HTMLAttributes<HTMLDivElement>
 {
-    imageUrl: string;
+    movie: IMovie;
 }
 
-export class MovieCard extends React.Component<IMovieCardProps, {}>
-{
-    constructor(props: IMovieCardProps)
-    {
-        super(props);
-    }
-
-    render()
-    {
-        return (
-            <Container>
-                <Image alt='' src={this.props.imageUrl}/>
-            </Container>
-        )
-    }
+export const MovieCard: React.FunctionComponent<IMovieCardProps> = (props) => {
+    return (
+        <Link href={`/movie?id=${props.movie.id}`} passHref>
+			<Container>
+                <Image about='nothing' width="100%" height="150px" layout='responsive' alt={props.movie.title} src={`https://image.tmdb.org/t/p/w500${props.movie.poster_path}`}/>
+            </Container>					
+        </Link>
+    )
 }

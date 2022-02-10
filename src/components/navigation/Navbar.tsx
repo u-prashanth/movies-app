@@ -92,7 +92,9 @@ const Logo = Styled.img`
 	}
 `
 
-const LinksWrapper = Styled.div`
+const LinksWrapper = Styled.ul`
+    list-style: none;
+
     display: flex;
     align-items: center;
 
@@ -109,9 +111,9 @@ const LinksWrapper = Styled.div`
     }
 `
 
-const LinkText = Styled.a`
+const LinkText = Styled.li`
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     color: #fff;
     text-decoration: none;
     cursor: pointer;
