@@ -26,11 +26,15 @@ const Container = Styled.div`
     }
 `
 
-const MovieTitle = Styled.div`
+const MovieTitle = Styled.p`
     font-size: 20px;
     font-weight: 600;
     color: #fff;
+`
 
+const OverviewText = Styled(MovieTitle)`
+    font-size: 14px;
+    
 `
 
 const VideoWrapper = Styled.div`
@@ -99,6 +103,7 @@ class Movie extends React.Component<IMovieProps, IState>
                     </VideoWrapper>
 
                     <MovieTitle>{this.state.movieData?.title || ''}</MovieTitle>
+                    <MovieTitle>{this.state.movieData?.overview || ''}</MovieTitle>
 
 
                 </Container>

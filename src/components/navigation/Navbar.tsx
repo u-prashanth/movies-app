@@ -59,9 +59,14 @@ const NavbarContainer = Styled.div`
     align-items: center;
     justify-content: space-between;
 
+    @media only screen and (max-width: 800px)
+	{
+		padding: 0px 40px;
+	}
+
     @media only screen and (max-width: 576px)
 	{
-		padding: 0px 16px;
+		padding: 0px 20px;
 	}
 `
 

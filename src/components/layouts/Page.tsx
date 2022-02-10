@@ -6,41 +6,37 @@ import { Navbar } from '..';
 const Container = Styled.div`
 	width: 100%:
 	height: 100%;
-
-	// overflow: hidden;
-	// overflow-y: auto;
 `
 
-const Body = Styled.div`
+const Body = Styled.div<{ enableTopPadding?: boolean }>`
+    width: 100%;
+
+    padding-top: ${props => props.enableTopPadding ? '70px' : '0px'};
+
+    @media only screen and (max-width: 800px)
+    {
+        padding-top: ${props => props.enableTopPadding ? '48px' : '0px'};
+    }
 `
 
 interface IPageProps
 {
     title: string;
+    enableTopPadding?: boolean;
 }
 
-export class Page extends React.Component<IPageProps, {}>
-{
-    constructor(props: IPageProps)
-    {
-        super(props);
-    }
+export const Page: React.FunctionComponent<IPageProps> = (props) => {
+    return (
+        <Container>
+            <Head>
+                <title>{props.title}</title>
+            </Head>
 
-    render(): React.ReactNode {
-        const { title, children } = this.props;
+            <Navbar />
 
-        return (
-            <Container>
-                <Head>
-                    <title>{title}</title>
-                </Head>
-
-                <Navbar />
-    
-                <Body>
-                    {children}
-                </Body>
-            </Container>
-        )
-    }
+            <Body enableTopPadding={props.enableTopPadding || true}>
+                {props.children}
+            </Body>
+        </Container>
+    )
 }

@@ -1,21 +1,26 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-const MovieCardContainer = Styled.div`
+const Container = Styled.div`
 	width: 100%:
 	height: 100%;
 
+	padding: 60px;
+
+	@media only screen and (max-width: 800px)
+	{
+		padding: 40px;
+	}
+
 	@media only screen and (max-width: 576px)
 	{
-		margin-top: -50px;
+		padding: 20px;
 	}
 `
 
-const MovieCardsWrapper = Styled.div`
+const ThumbnailsWrapper = Styled.div`
 	width: 100%;
 	height: 100%;
-
-	padding: 16px 44px;
 
 	position: relative;
 	z-index: 1;
@@ -49,12 +54,10 @@ const MovieCardsWrapper = Styled.div`
 	@media only screen and (max-width: 576px)
 	{
 		grid-template-columns: repeat(3, minmax(100px, 200px));
-		padding: 10px;
-		margin-top: 8px;
 	}
 `
 
-const MovieSectionTitle = Styled.h2`
+const SectionTitle = Styled.h2`
 	font-size: 1.4vw;
 	font-weight: 700;
 	color: #fff;
@@ -62,36 +65,26 @@ const MovieSectionTitle = Styled.h2`
 	position: relative;
 	z-index: 1;
 
-	padding-left: 44px;
+	margin-bottom: 16px;
 
 	@media only screen and (max-width: 800px)
 	{
 		font-size: 12px;
-		padding-left: 16px;
 	}
 `
 
-interface IMovieCardsLayoutProps
+interface IMovieThumbnailSectionProps
 {
-    sectionName: string;
+    title: string;
 }
 
-export class MovieCardsLayout extends React.Component<IMovieCardsLayoutProps,{}>
-{
-    constructor(props: IMovieCardsLayoutProps)
-    {
-        super(props);
-    }
-
-    render()
-    {
-        return (
-            <MovieCardContainer>
-                <MovieSectionTitle>{this.props.sectionName}</MovieSectionTitle>
-                <MovieCardsWrapper>
-                    {this.props.children}
-                </MovieCardsWrapper>
-            </MovieCardContainer>
-        )
-    }
+export const MovieThumbnailSection: React.FunctionComponent<IMovieThumbnailSectionProps> = (props) => {
+	return (
+		<Container>
+			<SectionTitle>{props.title}</SectionTitle>
+			<ThumbnailsWrapper>
+				{props.children}
+			</ThumbnailsWrapper>
+		</Container>
+	)
 }

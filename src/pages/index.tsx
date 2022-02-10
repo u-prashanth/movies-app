@@ -1,5 +1,4 @@
 import React from 'react';
-import { MapStateToProps, connect } from 'react-redux';
 import Styled from 'styled-components';
 
 import Link from 'next/link';
@@ -9,11 +8,9 @@ import type { GetServerSidePropsContext, GetStaticProps } from 'next'
 import Icon from '@mdi/react';
 import { mdiMagnify  } from '@mdi/js';
 
-import { Button, Dropdown, Page, TextField } from '../components';
+import { Button, Dropdown, MovieThumbnailSection, Page, TextField } from '../components';
 import { IMovieData } from '../interface';
 import { GetPopularMoviesService } from '../services';
-
-import { setSearch } from '../redux/reducer'
 
 
 
@@ -27,8 +24,6 @@ const Container = Styled.div`
 	flex-direction: column;
     align-items: center;
     justify-content: center;
-
-	padding-top: 120px;
 `
 
 const MovieCardContainer = Styled.div`
@@ -157,8 +152,7 @@ const DropdownWrapper = Styled.div`
 
 interface IHomeProps extends GetServerSidePropsContext
 {
-    result: string;
-	setSearch: ({}) => void
+    result: IMovieData[];
 }
 
 interface IState
@@ -170,168 +164,180 @@ interface IState
     year: string;
 }
 
-class Home extends React.Component<IHomeProps, IState> 
-{
-	constructor(props: IHomeProps)
-	{
-		super(props)
+// class Home extends React.Component<IHomeProps, IState> 
+// {
+// 	constructor(props: IHomeProps)
+// 	{
+// 		super(props)
 
-		this.state = {
-            moviesData: [],
-            search: '',
-            category: '',
-            rating: '',
-            year: ''
-        }
-	}
+// 		this.state = {
+//             moviesData: [],
+//             search: '',
+//             category: '',
+//             rating: '',
+//             year: ''
+//         }
+// 	}
 
-	componentDidMount()
-    {
-        this.setMovieData(this.props.result);
-    }
+// 	componentDidMount()
+//     {
+//         this.setMovieData(this.props.result);
+// 		console.log(this.props.result);
+//     }
 
-	componentDidUpdate(prevProps: Readonly<IHomeProps> & Readonly<{ children?: React.ReactNode; }>)
-    {
-        if(this.props !== prevProps)
-            this.setMovieData(this.props.result);
-    }
+// 	componentDidUpdate(prevProps: Readonly<IHomeProps> & Readonly<{ children?: React.ReactNode; }>)
+//     {
+//         if(this.props !== prevProps)
+//             this.setMovieData(this.props.result);
+//     }
 
-	shouldComponentUpdate(prevProps: Readonly<IHomeProps> & Readonly<{ children?: React.ReactNode; }>)
-    {
-        return !(this.props !== prevProps);
-    }
+// 	shouldComponentUpdate(prevProps: Readonly<IHomeProps> & Readonly<{ children?: React.ReactNode; }>)
+//     {
+//         return !(this.props !== prevProps);
+//     }
 
-	setMovieData = (value: string) => {
-        this.setState({ moviesData: JSON.parse(value) as IMovieData[] });
-    }
+// 	setMovieData = (value: IMovieData[]) => {
+//         this.setState({ moviesData: value });
+//     }
 
-	handleSearchText = (value: string) => {
-		this.setState({ search: value })
-		// this.props.setSearch(value);
-	}
+// 	handleSearchText = (value: string) => {
+// 		this.setState({ search: value })
+// 	}
 
-	handleCategorySelection = (value: string) => {
-		this.setState({ category: value });
-	}
+// 	handleCategorySelection = (value: string) => {
+// 		this.setState({ category: value });
+// 	}
 
-	handleYearSelection = (value: string) => {
-		this.setState({ year: value });
-	}
+// 	handleYearSelection = (value: string) => {
+// 		this.setState({ year: value });
+// 	}
 
-	handleRatingSelection = (value: string) => {
-		this.setState({ rating: value });
-	}
+// 	handleRatingSelection = (value: string) => {
+// 		this.setState({ rating: value });
+// 	}
 
-	render()
-	{
-		const { search, category, rating, year } = this.state;
+// 	render()
+// 	{
+// 		const { search, category, rating, year } = this.state;
 
-		return (
-			<Page title='Incredible Movies'>
-				<Container>
-					<SearchBoxWrapper>
-						<div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-							<TextField 
-								placeholder='Search Movies' 
-								withIcon={<Icon path={mdiMagnify} size={0.6} color='#888'/>} 
-								value={search}
-								onChange={e => this.handleSearchText(e.target.value)}
-							/>
+// 		return (
+// 			<Page title='Incredible Movies'>
+// 				<Container>
+// 					<SearchBoxWrapper>
+// 						<div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+// 							<TextField 
+// 								placeholder='Search Movies' 
+// 								withIcon={<Icon path={mdiMagnify} size={0.6} color='#888'/>} 
+// 								value={search}
+// 								onChange={e => this.handleSearchText(e.target.value)}
+// 							/>
 	
-							<div style={{ marginLeft: 8, display: 'flex' }}>
-								<Link 
-									href={`/search?movie=${search}&category=${category !== '' ? category : 'all'}&rating=${rating !== '' ? rating : 'all'}&year=${year !== '' ? year : 'all'}`}
-									passHref
-								>
-									<Button>Search</Button>
-								</Link>
-							</div>
-						</div>
-						<DropdownWrapper style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-							<Dropdown
-								placeholder='Category'
-								value={category}
-								options={
-									[
-										'Action',
-										'Adventure',
-										'Crime',
-										'Comedy',
-										'Horror',
-										'Mystery',
-										'Romance',
-										'Thriller'
-									]
-								}
-								onChange={e => this.handleCategorySelection(e.target.value)}
-							/>
+// 							<div style={{ marginLeft: 8, display: 'flex' }}>
+// 								<Link 
+// 									href={`/search?movie=${search}&category=${category !== '' ? category : 'all'}&rating=${rating !== '' ? rating : 'all'}&year=${year !== '' ? year : 'all'}`}
+// 									passHref
+// 								>
+// 									<Button>Search</Button>
+// 								</Link>
+// 							</div>
+// 						</div>
+// 						<DropdownWrapper style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+// 							<Dropdown
+// 								placeholder='Category'
+// 								value={category}
+// 								options={
+// 									[
+// 										'Action',
+// 										'Adventure',
+// 										'Crime',
+// 										'Comedy',
+// 										'Horror',
+// 										'Mystery',
+// 										'Romance',
+// 										'Thriller'
+// 									]
+// 								}
+// 								onChange={e => this.handleCategorySelection(e.target.value)}
+// 							/>
 	
-							<Dropdown
-								placeholder='Rating'
-								value={rating}
-								options={
-									[
-										'9+',
-										'8+',
-										'7+',
-										'6+',
-										'5+',
-										'4+',
-										'3+',
-										'2+',
-										'1+'
-									]
-								}
-								onChange={e => this.handleRatingSelection(e.target.value)}
-							/>
+// 							<Dropdown
+// 								placeholder='Rating'
+// 								value={rating}
+// 								options={
+// 									[
+// 										'9+',
+// 										'8+',
+// 										'7+',
+// 										'6+',
+// 										'5+',
+// 										'4+',
+// 										'3+',
+// 										'2+',
+// 										'1+'
+// 									]
+// 								}
+// 								onChange={e => this.handleRatingSelection(e.target.value)}
+// 							/>
 	
-							<Dropdown
-								placeholder='Year'
-								value={year}
-								options={
-									[
-										'2022',
-										'2021',
-										'2020',
-										'2019',
-										'2018',
-									]
-								}
-								onChange={e => this.handleYearSelection(e.target.value)}
-							/>
-						</DropdownWrapper>
-					</SearchBoxWrapper>
+// 							<Dropdown
+// 								placeholder='Year'
+// 								value={year}
+// 								options={
+// 									[
+// 										'2022',
+// 										'2021',
+// 										'2020',
+// 										'2019',
+// 										'2018',
+// 									]
+// 								}
+// 								onChange={e => this.handleYearSelection(e.target.value)}
+// 							/>
+// 						</DropdownWrapper>
+// 					</SearchBoxWrapper>
 	
-					<MovieCardContainer>
-						<MovieSectionTitle>Most Popular</MovieSectionTitle>
-						<MovieCardsWrapper>
-							{
-								this.state.moviesData.map((movie, index) => (
-									<Link href={`/movie?id=${movie.id}`} passHref key={index}>
-										<MovieCard key={index}>
-											<Image width="100%" height="150px" layout='responsive' alt={movie.title} src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
-										</MovieCard>
-									</Link>
-								))
-							}
-						</MovieCardsWrapper>
-					</MovieCardContainer>
-				</Container>
-			</Page>
-		)
-	}
+// 					<MovieCardContainer>
+// 						<MovieSectionTitle>Most Popular</MovieSectionTitle>
+// 						<MovieCardsWrapper>
+// 							{
+// 								this.state.moviesData.map((movie, index) => (
+// 									<Link href="/" passHref key={index}>
+// 										<MovieCard>
+// 											<Image width="100%" height="150px" layout='responsive' alt={movie.title} src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"/>
+// 										</MovieCard>
+// 									</Link>
+// 								))
+// 							}
+// 						</MovieCardsWrapper>
+// 					</MovieCardContainer>
+// 				</Container>
+// 			</Page>
+// 		)
+// 	}
+// }
+
+// export default Home;
+
+
+
+const Home: React.FunctionComponent = (props) => {
+	return (
+		<Page title='Incredible Movies'>
+			<Container>
+				<MovieThumbnailSection title='Popular'>
+					{
+						[...Array(20)].map((e, i) => (
+							<Link href="/" passHref key={i}>
+								<MovieCard>
+									<Image width="100%" height="150px" layout='responsive' alt="" src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"/>
+								</MovieCard>
+							</Link>
+						))
+					}
+				</MovieThumbnailSection>
+			</Container>
+		</Page>
+	)
 }
 
-export async function getServerSideProps(ctx: GetStaticProps) {
-    return {
-        props: {
-            result: JSON.stringify(await (await GetPopularMoviesService()).data.results)
-        }
-    }
-}
-
-const mapStateToProps = (state: any) => state
-const mapDispatchToProps = {
-	setSearch
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
