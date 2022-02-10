@@ -38,7 +38,7 @@ const Container = Styled.div`
 
 	@media only screen and (max-width: 576px)
 	{
-		padding: 20px;
+		padding: 16px;
 		height: 40vh;
 	}
 `
@@ -96,7 +96,7 @@ const MovieTitle = Styled.span`
 	font-weight: 900;
 	position: relative;
 	z-index: 1;
-	
+
 	@media only screen and (max-width: 800px)
 	{
 		font-size: 14px;
