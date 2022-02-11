@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { GetServerSidePropsContext, GetStaticProps } from 'next'
 
 
-import { Button, Dropdown, FeaturedMovieSection, MovieCard, MovieThumbnailSection, Page, SearchMovieSection, TextField } from '../components';
+import { Button, Dropdown, FeaturedMovieSection, MovieCard, MovieThumbnailSection, Page, TextField } from '../components';
 import { IMovie, IMovieData } from '../interface';
 import { GetPopularMoviesService } from '../services';
 
