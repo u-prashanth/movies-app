@@ -1,6 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import Styled from 'styled-components';
+import Icon from '@mdi/react';
+import { mdiMagnify } from '@mdi/js';
+import { TextField } from '..';
 
 const NavbarWrapper = Styled.nav<{ fadeToBlack: boolean }>`
     width: 100%;
@@ -170,7 +173,9 @@ export const Navbar = () => {
                 </NavLeft>
 
                 <NavRight>
-
+                    <form style={{ width: 300 }}>
+                        <TextField placeholder='Search Movies' withIcon={<Icon path={mdiMagnify} size={0.6} color="#888"/>}/>
+                    </form>
                 </NavRight>
             </NavbarContainer>
         </NavbarWrapper>

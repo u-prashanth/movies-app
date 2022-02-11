@@ -60,10 +60,6 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 				<Container>
 					<FeaturedMovieSection movie={movies[Math.floor(Math.random() * movies.length)]} />
 
-					<SearchMovieSection>
-
-					</SearchMovieSection>
-
 					<WrapWithMarginTop>
 						<MovieThumbnailSection title='Popular'>
 							{

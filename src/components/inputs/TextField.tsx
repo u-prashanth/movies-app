@@ -6,7 +6,7 @@ const Container = Styled.div`
     height: 42px;
     
     border-radius: 4px;
-    background-color: #555;
+    background-color: #212121;
 
     display: flex;
     align-items: center;
@@ -21,12 +21,12 @@ const Input = Styled.input<{ withIcon?: boolean }>`
     padding: 0px 16px;
     padding-left: ${props => props.withIcon ? '0px' : '16px'};
     
-    background-color: #555;
+    background-color: #212121;
 
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     font-weight: 600;
-    color: #888;
+    color: #eaeaeb;
 
     border: none;
     &:focus
@@ -44,7 +44,7 @@ const Input = Styled.input<{ withIcon?: boolean }>`
 `
 
 const IconWrapper = Styled.div`
-    width: 42px;
+    width:62px;
     height: 42px;
 
     display: flex;
