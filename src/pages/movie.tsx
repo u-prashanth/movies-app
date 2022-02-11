@@ -27,14 +27,24 @@ const MovieDetailsSection = Styled.div`
     height: 100%;
 
     margin: 0px auto;
-    margin-top: -120px;
-    padding: 30px;
+    margin-top: -160px;
+    padding: 40px 60px;
 
-    background-color: #1e1e1e;
+    background-color: #21212199;
     border-radius: 8px;
 
     position: relative;
     z-index: 10;
+
+    @media only screen and (max-width: 800px)
+    {
+        padding: 30px 40px;
+    }
+
+    @media only screen and (max-width: 576px)
+    {
+        padding: 30px 14px;
+    }
 `
 
 const Title = Styled.p`

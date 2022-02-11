@@ -18,9 +18,12 @@ const moviesReducer = createSlice({
     reducers: {
         setPopularMovies: (state, action) => {
             state.popularMovies = action.payload;
+        },
+        setSearchResults: (state, action) => {
+            state.searchResults = action.payload;
         }
     }
 })
 
-export const { setPopularMovies } = moviesReducer.actions;
+export const { setPopularMovies, setSearchResults } = moviesReducer.actions;
 export default moviesReducer.reducer;

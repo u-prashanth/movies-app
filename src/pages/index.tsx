@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { GetServerSidePropsContext, GetStaticProps } from 'next'
 
 
-import { Button, Dropdown, FeaturedMovieSection, MovieCard, MovieThumbnailSection, Page, TextField } from '../components';
+import { Button, Dropdown, FeaturedMovieSection, MovieCard, MovieThumbnailSection, Page, SearchMovieSection, TextField } from '../components';
 import { IMovie, IMovieData } from '../interface';
 import { GetPopularMoviesService } from '../services';
 
@@ -51,7 +51,6 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 	
 	React.useEffect(() => {
 		dispatch(setPopularMovies(props.popularMovies));
-		console.log(Math.floor(Math.random() * movies.length))
 	}, [movies])
 
 	return (
@@ -60,6 +59,10 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 				movies.length &&
 				<Container>
 					<FeaturedMovieSection movie={movies[Math.floor(Math.random() * movies.length)]} />
+
+					<SearchMovieSection>
+
+					</SearchMovieSection>
 
 					<WrapWithMarginTop>
 						<MovieThumbnailSection title='Popular'>

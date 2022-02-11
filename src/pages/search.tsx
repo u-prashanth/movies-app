@@ -13,6 +13,10 @@ import { IMovie, IMovieData } from '../interface';
 import { Button, Dropdown, MovieCard, MovieThumbnailSection, Page, TextField } from '../components';
 import { GetPopularMoviesService, SearchMovieService } from '../services';
 
+// Redux
+import { setSearchResults } from '../redux';
+import { useAppDispatch, useAppSelector } from '../redux/reduxHook';
+
 
 const Container = Styled.div`
 	width: 100%:
@@ -33,10 +37,14 @@ interface ISearchProps extends GetServerSideProps
 
 export const Search: React.FunctionComponent<ISearchProps> = (props) => {
 
-    const [ searchResults, setSearchResults ] = React.useState([] as unknown as IMovie[]);
+    // Dispatch
+	const dispatch = useAppDispatch();
+
+	// Redux State
+	const movies = useAppSelector(state => state.movies.searchResults);
 
     React.useEffect(() => {
-        setSearchResults(props.searchResults);
+        dispatch(setSearchResults(props.searchResults));
     }, [props.searchResults])
 
     return (
@@ -44,7 +52,7 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
             <Container>
                 <MovieThumbnailSection title="Here's what we found">
                     {
-						searchResults.map((movie, i) => (
+						movies.map((movie, i) => (
                             <MovieCard key={i} movie={movie}/>
 						))
 					}
