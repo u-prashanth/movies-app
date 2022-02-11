@@ -81,6 +81,10 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
         filterResults(selectedGenreId);
     }, [selectedGenreId, selectedGenre, selectedYear, selectedRating])
 
+    React.useEffect(() => {
+        console.log(filteredResults);
+    }, [filteredResults])
+
 
     const handleGenreSelection = (genre: string) => {
         setSelectedGenre(genre);
@@ -104,9 +108,7 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
 
     const filterResults = (genreId?: number) => {
         setFilteredResults(
-            searchResults.filter(movies => {
-                return (genreId !== undefined && movies.genre_ids?.includes(genreId)) && (selectedYear !== '' && moment(movies.release_date, "YYYY-MM-DD").year().toString() === selectedYear) && (selectedRating !== '' && parseFloat(selectedRating) >= movies.vote_average!);
-            })
+            searchResults.filter(movies => genreId !== undefined ? movies.genre_ids?.includes(genreId) : movies).filter(movies => selectedYear !== '' ? moment(movies.release_date, "YYYY-MM-DD").year().toString() === selectedYear : movies).filter(movies => selectedRating !== '' ? parseFloat(selectedRating) <= movies.vote_average! : movies)
         );
     }
     
