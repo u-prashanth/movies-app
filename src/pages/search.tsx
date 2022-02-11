@@ -51,6 +51,17 @@ const FiltersWrapper = Styled.div`
     }
 `
 
+const NoMoviesFoundSection = Styled.div`
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 100px;
+`
+
 interface ISearchProps extends GetServerSideProps
 {
     searchResults: IMovie[];
@@ -68,6 +79,7 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
     const [ selectedYear, setSelectedYear ] = React.useState('');
     const [ selectedRating, setSelectedRating ] = React.useState('');
     const [ filteredResults, setFilteredResults ] = React.useState([] as unknown as IMovie[]);
+    const [ showResults, setShowResults ] = React.useState(true);
 
 	// Redux State
 	const { searchResults, genres } = useAppSelector(state => state.movies);
@@ -78,12 +90,9 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
     }, [props])
 
     React.useEffect(() => {
+        setShowResults(false);
         filterResults(selectedGenreId);
     }, [selectedGenreId, selectedGenre, selectedYear, selectedRating])
-
-    React.useEffect(() => {
-        console.log(filteredResults);
-    }, [filteredResults])
 
 
     const handleGenreSelection = (genre: string) => {
@@ -104,6 +113,7 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
         setSelectedGenre('');
         setSelectedYear('');
         setSelectedRating('');
+        setShowResults(true);
     }
 
     const filterResults = (genreId?: number) => {
@@ -154,18 +164,29 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
                     </SearchFiltersSection>
                 }
 
-                <MovieThumbnailSection title="Here's what we found">
-                    {
-                        filteredResults.length ?
-                        filteredResults.map((movie, i) => (
-                            <MovieCard key={i} movie={movie}/>
-						))
+                {
+                    showResults ?
+                        <MovieThumbnailSection title="Here's what we found">
+                        {
+                            searchResults.map((movie, i) => (
+                                <MovieCard key={i} movie={movie}/>
+                            ))
+                        }
+                        </MovieThumbnailSection>
                         :
-						searchResults.map((movie, i) => (
-                            <MovieCard key={i} movie={movie}/>
-						))
-					}
-                </MovieThumbnailSection>
+                        filteredResults.length ?
+                            <MovieThumbnailSection title="Here's what we found">
+                                {
+                                    filteredResults.map((movie, i) => (
+                                        <MovieCard key={i} movie={movie}/>
+                                    ))
+                                }
+                            </MovieThumbnailSection>
+                            :
+                            <NoMoviesFoundSection>
+                                <span style={{ color: '#fff', fontSize: 14, fontWeight: 700 }}>No Movies found!</span>
+                            </NoMoviesFoundSection>
+                }
             </Container>
         </Page>
     )
