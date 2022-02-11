@@ -1,12 +1,10 @@
 import React from 'react';
 import Styled from 'styled-components';
 
-import Link from 'next/link';
-import type { GetServerSidePropsContext, GetStaticProps } from 'next'
+import type { GetServerSidePropsContext } from 'next'
 
-
-import { Button, Dropdown, FeaturedMovieSection, MovieCard, MovieThumbnailSection, Page, TextField } from '../components';
-import { IMovie, IMovieData } from '../interface';
+import { FeaturedMovieSection, MovieCard, MovieThumbnailSection, Page } from '../components';
+import { IMovie } from '../interface';
 import { GetPopularMoviesService } from '../services';
 
 // Redux

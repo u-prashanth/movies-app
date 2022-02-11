@@ -90,21 +90,23 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
     }, [props])
 
     React.useEffect(() => {
-        setShowResults(false);
         filterResults(selectedGenreId);
     }, [selectedGenreId, selectedGenre, selectedYear, selectedRating])
 
 
     const handleGenreSelection = (genre: string) => {
+        setShowResults(false);
         setSelectedGenre(genre);
         setSelectedGenreId(genres.find(g => g.name === genre)?.id!)
     }
 
     const handleSelectedYear = (value: string) => {
+        setShowResults(false);
         setSelectedYear(value);
     }
 
     const handleSelectedRating = (value: string) => {
+        setShowResults(false);
         setSelectedRating(value);
     }
 
