@@ -6,7 +6,7 @@ const Container = Styled.div`
     height: 42px;
     
     border-radius: 4px;
-    background-color: #212121;
+    background-color: #111;
 
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@ const Input = Styled.input<{ withIcon?: boolean }>`
     padding: 0px 16px;
     padding-left: ${props => props.withIcon ? '0px' : '16px'};
     
-    background-color: #212121;
+    background-color: #111;
 
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;

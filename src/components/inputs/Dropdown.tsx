@@ -3,21 +3,28 @@ import Styled from 'styled-components'
 
 const Wrapper = Styled.select`
     width: auto;
-    height: 32px;
+    height: 42px;
 
-    padding: 0px 8px;
+    padding: 0px 16px;
     
     border-radius: 4px;
     border: none !important;
     background-color: #555;
 
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     color: #888;
 
     &:focus
     {
         outline: none;
+    }
+
+    @media only screen and (max-width: 800px)
+    {
+        height: 30px;
+        padding: 0px 16px;
+        font-size: 12px;
     }
 `
 

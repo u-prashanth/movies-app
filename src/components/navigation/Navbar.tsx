@@ -1,9 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Styled from 'styled-components';
+
 import Icon from '@mdi/react';
 import { mdiMagnify } from '@mdi/js';
+
 import { TextField } from '..';
+import { useAppDispatch, useAppSelector } from '../../redux/reduxHook';
+import { setSearchTerm as reduxSetSearchTerm } from '../../redux/reducer/moviesReducer';
 
 const NavbarWrapper = Styled.nav<{ fadeToBlack: boolean }>`
     width: 100%;
@@ -129,15 +134,24 @@ const LinkText = Styled.li`
 
 export const Navbar = () => {
 
+    const router = useRouter();
+
+    // Component State
+    const [ searchTerm, setSearchTerm ] = React.useState('');
     const [ fadeToBlack, setFadeToBlack ] = React.useState(false);
+
+    // Redux State
+    const movies = useAppSelector(state => state.movies);
+    const dispatch = useAppDispatch();
 
     React.useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 
+        setSearchTerm(movies.searchTerm);
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
         }
-
     }, [])
 
     const handleScroll = (e: Event) => {
@@ -153,17 +167,27 @@ export const Navbar = () => {
         }
     }
 
+    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        router.push(`/search?q=${searchTerm}`)
+    }
+
+    const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+        dispatch(reduxSetSearchTerm(event.target.value));
+    }
+
     return (
         <NavbarWrapper fadeToBlack={fadeToBlack}>
             <NavbarContainer>
                 <NavLeft>
                     <Link href='/' passHref>
-                        <Logo src='../../netflix-logo.svg'/>
+                        <Logo src='../../netflix-logo.svg' onClick={e => dispatch(reduxSetSearchTerm(''))}/>
                     </Link>
 
                     <LinksWrapper>
                         <Link href='/' passHref>
-                            <LinkText>Movies</LinkText>
+                            <LinkText onClick={e => dispatch(reduxSetSearchTerm(''))}>Movies</LinkText>
                         </Link>
 
                         <Link href='/about' passHref>
@@ -173,8 +197,13 @@ export const Navbar = () => {
                 </NavLeft>
 
                 <NavRight>
-                    <form style={{ width: 300 }}>
-                        <TextField placeholder='Search Movies' withIcon={<Icon path={mdiMagnify} size={0.6} color="#888"/>}/>
+                    <form style={{ width: 300 }} onSubmit={handleFormSubmit}>
+                        <TextField 
+                            placeholder='Search Movies' 
+                            withIcon={<Icon path={mdiMagnify} size={0.6} color="#888"/>}
+                            value={searchTerm}
+                            onChange={handleSearchInput}
+                        />
                     </form>
                 </NavRight>
             </NavbarContainer>

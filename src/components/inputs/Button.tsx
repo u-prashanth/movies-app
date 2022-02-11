@@ -57,7 +57,7 @@ const ButtonText = Styled.p`
 
 type ButtonStyle = "primary" | "secondary";
 
-interface IButtonProps extends React.HTMLAttributes<HTMLDivElement>
+interface IButtonProps extends React.HTMLAttributes<HTMLButtonElement>
 {
     buttonStyle?: ButtonStyle;
     icon?: React.ReactNode | JSX.Element;
@@ -65,7 +65,7 @@ interface IButtonProps extends React.HTMLAttributes<HTMLDivElement>
 
 export const Button: React.FunctionComponent<IButtonProps> = (props) => {
     return (
-        <Wrapper buttonStyle={props.buttonStyle || 'primary'}>
+        <Wrapper buttonStyle={props.buttonStyle || 'primary'} {...props}>
             {props.icon}
             <ButtonText>{props.children}</ButtonText>
         </Wrapper>

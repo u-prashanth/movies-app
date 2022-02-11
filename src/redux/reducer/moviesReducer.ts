@@ -1,15 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IMovie } from '../../interface';
+import { IGenre, IMovie } from '../../interface';
 
 interface IMovieState
 {
     popularMovies: IMovie[];
     searchResults: IMovie[];
+    genres: IGenre[];
+    searchTerm: string;
 }
 
 const initialState: IMovieState = {
     popularMovies: [],
-    searchResults: []
+    searchResults: [],
+    genres: [],
+    searchTerm: ''
 }
 
 const moviesReducer = createSlice({
@@ -21,9 +25,15 @@ const moviesReducer = createSlice({
         },
         setSearchResults: (state, action) => {
             state.searchResults = action.payload;
+        },
+        setGenres: (state, action) => {
+            state.genres = action.payload;
+        },
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload;
         }
     }
 })
 
-export const { setPopularMovies, setSearchResults } = moviesReducer.actions;
+export const { setPopularMovies, setSearchResults, setGenres, setSearchTerm } = moviesReducer.actions;
 export default moviesReducer.reducer;

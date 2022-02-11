@@ -1,5 +1,5 @@
 export * from './Page';
-export * from './SearchMovieSection';
 export * from './MovieBackdrop';
+export * from './SearchFiltersSection';
 export * from './FeaturedMovieSection';
 export * from './MovieThumbnailSection';
