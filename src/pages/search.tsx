@@ -105,7 +105,7 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
     const filterResults = (genreId?: number) => {
         setFilteredResults(
             searchResults.filter(movies => {
-                return (genreId !== undefined && movies.genre_ids?.includes(genreId)) || (selectedYear !== '' && moment(movies.release_date, "YYYY-MM-DD").year().toString() === selectedYear) || (selectedRating !== '' && parseFloat(selectedRating) >= movies.vote_average!);
+                return (genreId !== undefined && movies.genre_ids?.includes(genreId)) && (selectedYear !== '' && moment(movies.release_date, "YYYY-MM-DD").year().toString() === selectedYear) && (selectedRating !== '' && parseFloat(selectedRating) >= movies.vote_average!);
             })
         );
     }
