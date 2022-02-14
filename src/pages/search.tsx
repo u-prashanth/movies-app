@@ -122,6 +122,12 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
 
         router.push(`${searchTerm !== ('' || undefined) ? `search?q=${searchTerm}` : 'search?'}${selectedGenreId !== (null || undefined) ? `&genre=${selectedGenreId}` : ''}${selectedYear !== '' ? `&year=${selectedYear}` : ''}${value !== '' ? `&rating=${parseInt(value)}` : ''}`);
     }
+
+    const getfilterResults = () => {
+        return searchResults.filter(movies => selectedGenreId !== undefined ? movies.genre_ids?.includes(selectedGenreId) : movies)
+                    .filter(movies => selectedYear !== '' ? moment(movies.release_date, "YYYY-MM-DD").year().toString() === selectedYear : movies)
+                    .filter(movies => selectedRating !== '' ? parseFloat(selectedRating) < movies.vote_average! : movies);
+    }
     
 
     return (
@@ -167,7 +173,7 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
                     searchResults.length > 0 ?
                     <MovieThumbnailSection title="Here's what we found">
                         {
-                            searchResults.filter(movies => selectedGenreId !== undefined ? movies.genre_ids?.includes(selectedGenreId) : movies).filter(movies => selectedYear !== '' ? moment(movies.release_date, "YYYY-MM-DD").year().toString() === selectedYear : movies).filter(movies => selectedRating !== '' ? parseFloat(selectedRating) < movies.vote_average! : movies).map((movie, i) => (
+                            getfilterResults().map((movie, i) => (
                                 <MovieCard key={i} movie={movie}/>
                             ))
                         }
