@@ -147,12 +147,14 @@ export const Navbar = () => {
     React.useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 
-        setSearchTerm(movies.searchTerm);
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
         }
     }, [])
+
+    React.useEffect(() => {
+        setSearchTerm(movies.searchTerm);
+    }, [movies.searchTerm]);
 
     const handleScroll = (e: Event) => {
         const window = e.currentTarget as Window;

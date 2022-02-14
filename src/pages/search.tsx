@@ -2,17 +2,15 @@ import React from 'react';
 import Styled from 'styled-components';
 import moment from 'moment';
 
+import { useRouter } from 'next/router';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
-import Icon from '@mdi/react';
-import { mdiMagnify  } from '@mdi/js';
-
 import { IGenre, IMovie } from '../interface';
-import { Button, Dropdown, MovieCard, MovieThumbnailSection, Page, SearchFiltersSection } from '../components';
+import { Dropdown, MovieCard, MovieThumbnailSection, Page, SearchFiltersSection } from '../components';
 import { GetPopularMoviesService, SearchMovieService } from '../services';
 
 // Redux
-import { setGenres, setSearchResults } from '../redux';
+import { setGenres, setSearchResults, setSearchTerm } from '../redux';
 import { useAppDispatch, useAppSelector } from '../redux/reduxHook';
 import { GetGenreDetailsService } from '../services/GetGenreDetailsService';
 
@@ -70,6 +68,8 @@ interface ISearchProps extends GetServerSideProps
 
 export const Search: React.FunctionComponent<ISearchProps> = (props) => {
 
+    const router = useRouter();
+
     // Dispatch
 	const dispatch = useAppDispatch();
 
@@ -78,50 +78,49 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
     const [ selectedGenre, setSelectedGenre ] = React.useState('');
     const [ selectedYear, setSelectedYear ] = React.useState('');
     const [ selectedRating, setSelectedRating ] = React.useState('');
-    const [ filteredResults, setFilteredResults ] = React.useState([] as unknown as IMovie[]);
-    const [ showResults, setShowResults ] = React.useState(true);
 
 	// Redux State
-	const { searchResults, genres } = useAppSelector(state => state.movies);
+	const { searchResults, genres, searchTerm } = useAppSelector(state => state.movies);
 
     React.useEffect(() => {
         dispatch(setSearchResults(props.searchResults));
         dispatch(setGenres(props.genres))
-    }, [props])
 
-    React.useEffect(() => {
-        filterResults(selectedGenreId);
-    }, [selectedGenreId, selectedGenre, selectedYear, selectedRating])
+        if(router.query.q !== '') dispatch(setSearchTerm(router.query.q));
+
+        if((router.query.genre !== undefined) || (router.query.genre && router.query.genre !== ''))
+        {
+            setSelectedGenre(genres.find(g => g.id === parseInt(router.query.genre as string))?.name!);
+            setSelectedGenreId(parseInt(router.query.genre as string))
+        }
+        
+        if((router.query.year !== undefined) || (router.query.year && router.query.year !== ''))
+        {
+            setSelectedYear(router.query.year as string);
+        }
+
+        if((router.query.rating !== undefined) || (router.query.rating && router.query.rating !== ''))
+        {
+            setSelectedRating(router.query.rating as string + '+');
+        }
+
+    }, [props, router.isReady, selectedGenreId, selectedGenre, selectedYear, selectedRating, searchResults])
 
 
     const handleGenreSelection = (genre: string) => {
-        setShowResults(false);
-        setSelectedGenre(genre);
-        setSelectedGenreId(genres.find(g => g.name === genre)?.id!)
+        router.push(`${searchTerm !== ('' || undefined) ? `search?q=${searchTerm}` : 'search?'}${genre !== '' ? `&genre=${genres.find(g => g.name === genre)?.id!}` : ''}${selectedYear !== '' ? `&year=${selectedYear}` : ''}${selectedRating !== '' ? `&rating=${selectedRating}` : ''}`);
     }
 
     const handleSelectedYear = (value: string) => {
-        setShowResults(false);
         setSelectedYear(value);
+
+        router.push(`${searchTerm !== ('' || undefined) ? `search?q=${searchTerm}` : 'search?'}${selectedGenreId !== (null || undefined) ? `&genre=${selectedGenreId}` : ''}${value !== '' ? `&year=${value}` : ''}${selectedRating !== '' ? `&rating=${selectedRating}` : ''}`);
     }
 
     const handleSelectedRating = (value: string) => {
-        setShowResults(false);
         setSelectedRating(value);
-    }
 
-    const handleResetFilters = () => {
-        setSelectedGenreId(undefined);
-        setSelectedGenre('');
-        setSelectedYear('');
-        setSelectedRating('');
-        setShowResults(true);
-    }
-
-    const filterResults = (genreId?: number) => {
-        setFilteredResults(
-            searchResults.filter(movies => genreId !== undefined ? movies.genre_ids?.includes(genreId) : movies).filter(movies => selectedYear !== '' ? moment(movies.release_date, "YYYY-MM-DD").year().toString() === selectedYear : movies).filter(movies => selectedRating !== '' ? parseFloat(selectedRating) <= movies.vote_average! : movies)
-        );
+        router.push(`${searchTerm !== ('' || undefined) ? `search?q=${searchTerm}` : 'search?'}${selectedGenreId !== (null || undefined) ? `&genre=${selectedGenreId}` : ''}${selectedYear !== '' ? `&year=${selectedYear}` : ''}${value !== '' ? `&rating=${parseInt(value)}` : ''}`);
     }
     
 
@@ -160,34 +159,23 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
                                 }
                                 onChange={e => handleSelectedRating(e.target.value)}
                             />
-
-                            <Button onClick={handleResetFilters}>Clear Filters</Button>
                         </FiltersWrapper>
                     </SearchFiltersSection>
                 }
 
                 {
-                    showResults ?
-                        <MovieThumbnailSection title="Here's what we found">
+                    searchResults.length > 0 ?
+                    <MovieThumbnailSection title="Here's what we found">
                         {
-                            searchResults.map((movie, i) => (
+                            searchResults.filter(movies => selectedGenreId !== undefined ? movies.genre_ids?.includes(selectedGenreId) : movies).filter(movies => selectedYear !== '' ? moment(movies.release_date, "YYYY-MM-DD").year().toString() === selectedYear : movies).filter(movies => selectedRating !== '' ? parseFloat(selectedRating) < movies.vote_average! : movies).map((movie, i) => (
                                 <MovieCard key={i} movie={movie}/>
                             ))
                         }
-                        </MovieThumbnailSection>
-                        :
-                        filteredResults.length ?
-                            <MovieThumbnailSection title="Here's what we found">
-                                {
-                                    filteredResults.map((movie, i) => (
-                                        <MovieCard key={i} movie={movie}/>
-                                    ))
-                                }
-                            </MovieThumbnailSection>
-                            :
-                            <NoMoviesFoundSection>
-                                <span style={{ color: '#fff', fontSize: 14, fontWeight: 700 }}>No Movies found!</span>
-                            </NoMoviesFoundSection>
+                    </MovieThumbnailSection>
+                    :
+                    <NoMoviesFoundSection>
+                        <span style={{ color: '#fff', fontSize: 14, fontWeight: 700 }}>No Movies found!</span>
+                    </NoMoviesFoundSection>   
                 }
             </Container>
         </Page>
@@ -197,7 +185,7 @@ export const Search: React.FunctionComponent<ISearchProps> = (props) => {
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
     let genreResults = await GetGenreDetailsService();
-    let result = ctx.query.q === '' ? await GetPopularMoviesService() : await SearchMovieService(ctx.query.q! as string);
+    let result = ctx.query.q === ('' || undefined) ? await GetPopularMoviesService() : await SearchMovieService(ctx.query.q! as string);
 
     return {
         props: {
